@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پلتفرم سرمایه‌گذاری</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1e1e1e;
+            --gold: #ffd700;
+            --gold-dark: #b8960f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --border-color: #2a2a2a;
+            --gradient-gold: linear-gradient(135deg, #ffd700, #ffaa00);
+            --gradient-dark: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .background-glow {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(255, 215, 0, 0.05) 0%, 
+                transparent 50%);
+            animation: glowPulse 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0 20px 0;
+            position: relative;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .platform-name {
+            font-size: 28px;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 5px;
+            font-weight: 300;
+        }
+
+        .wallet-section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .wallet-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        #connect-wallet-btn {
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        #connect-wallet-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        #connect-wallet-btn.connected {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .wallet-info {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .wallet-info.active {
+            display: block;
+        }
+
+        .wallet-address {
+            color: var(--text-secondary);
+            font-size: 12px;
+            word-break: break-all;
+            background: var(--bg-primary);
+            padding: 8px;
+            border-radius: 8px;
+            margin: 10px 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .balance {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent-green);
+            margin: 10px 0;
+        }
+
+        .plans-section {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-gold);
+            margin: 10px auto 0;
+            border-radius: 5px;
+        }
+
+        .plans-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .vip-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+        }
+
+        .vip-1::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .vip-2::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        .vip-3::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .vip-4::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+        .vip-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .vip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .vip-badge {
+            font-size: 20px;
+            font-weight: 900;
+            padding: 4px 12px;
+            border-radius: 8px;
+        }
+
+        .vip-1 .vip-badge { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+        .vip-2 .vip-badge { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+        .vip-3 .vip-badge { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .vip-4 .vip-badge { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        .vip-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .vip-price span {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .vip-features {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .vip-features li {
+            color: var(--text-secondary);
+            padding: 5px 0;
+            font-size: 13px;
+        }
+
+        .vip-features li::before {
+            content: '✓ ';
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        .activate-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--gradient-dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .vip-1 .activate-btn { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .vip-2 .activate-btn { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .vip-3 .activate-btn { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .vip-4 .activate-btn { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+        .activate-btn:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .activate-btn.activated {
+            background: var(--accent-green) !important;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .one-time-badge {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .history-section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .history-item {
+            background: var(--bg-card);
+            padding: 12px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-plan {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .history-amount {
+            color: var(--accent-green);
+        }
+
+        .history-date {
+            color: var(--text-secondary);
+            font-size: 11px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--gold);
+            animation: modalSlide 0.3s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .close-modal-btn {
+            background: var(--gradient-gold);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-spinner.active {
+            display: block;
+        }
+
+        .ton-symbol {
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-glow"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-icon">💎</div>
+            <h1 class="platform-name">INVEST PLATFORM</h1>
+            <p class="subtitle">پلتفرم سرمایه‌گذاری VIP</p>
+        </div>
+
+        <!-- Wallet Connection -->
+        <div class="wallet-section">
+            <div class="wallet-header">
+                <span class="wallet-title">🔗 کیف پول</span>
+                <button id="connect-wallet-btn" onclick="handleWalletConnection()">اتصال به Tonkeeper</button>
+            </div>
+            <div id="wallet-info" class="wallet-info">
+                <div style="font-size: 12px; color: var(--text-secondary);">آدرس کیف پول:</div>
+                <div id="wallet-address" class="wallet-address">---</div>
+                <div class="balance" id="wallet-balance">0.00 TON</div>
+            </div>
+            <div class="loading-spinner" id="loading-spinner"></div>
+        </div>
+
+        <!-- Investment Plans -->
+        <div class="plans-section">
+            <h2 class="section-title">💰 پلن‌های سرمایه‌گذاری</h2>
+            <div class="plans-grid">
+                <!-- VIP 1 -->
+                <div class="vip-card vip-1" id="vip1-card">
+                    <div class="vip-header">
+                        <span class="vip-badge">VIP 1</span>
+                        <span class="vip-price">10 <span>TON</span></span>
+                    </div>
+                    <ul class="vip-features">
+                        <li>سود روزانه 2%</li>
+                        <li>مدت سرمایه‌گذاری: 30 روز</li>
+                        <li>پشتیبانی معمولی</li>
+                    </ul>
+                    <button class="activate-btn" id="vip1-btn" onclick="activatePlan(1)">
+                        <span class="one-time-badge">فقط یکبار</span>
+                        فعال‌سازی VIP 1
+                    </button>
+                </div>
+
+                <!-- VIP 2 -->
+                <div class="vip-card vip-2" id="vip2-card">
+                    <div class="vip-header">
+                        <span class="vip-badge">VIP 2</span>
+                        <span class="vip-price">25 <span>TON</span></span>
+                    </div>
+                    <ul class="vip-features">
+                        <li>سود روزانه 4%</li>
+                        <li>مدت سرمایه‌گذاری: 20 روز</li>
+                        <li>پشتیبانی VIP</li>
+                        <li>برداشت آنی</li>
+                    </ul>
+                    <button class="activate-btn" id="vip2-btn" onclick="activatePlan(2)">
+                        فعال‌سازی VIP 2
+                    </button>
+                </div>
+
+                <!-- VIP 3 -->
+                <div class="vip-card vip-3" id="vip3-card">
+                    <div class="vip-header">
+                        <span class="vip-badge">VIP 3</span>
+                        <span class="vip-price">50 <span>TON</span></span>
+                    </div>
+                    <ul class="vip-features">
+                        <li>سود روزانه 6%</li>
+                        <li>مدت سرمایه‌گذاری: 15 روز</li>
+                        <li>پشتیبانی 24/7</li>
+                        <li>برداشت آنی</li>
+                        <li>جوایز ماهانه</li>
+                    </ul>
+                    <button class="activate-btn" id="vip3-btn" onclick="activatePlan(3)">
+                        فعال‌سازی VIP 3
+                    </button>
+                </div>
+
+                <!-- VIP 4 -->
+                <div class="vip-card vip-4" id="vip4-card">
+                    <div class="vip-header">
+                        <span class="vip-badge">VIP 4</span>
+                        <span class="vip-price">100 <span>TON</span></span>
+                    </div>
+                    <ul class="vip-features">
+                        <li>سود روزانه 8%</li>
+                        <li>مدت سرمایه‌گذاری: 10 روز</li>
+                        <li>پشتیبانی اختصاصی</li>
+                        <li>برداشت آنی</li>
+                        <li>جوایز هفتگی</li>
+                        <li>مشاوره سرمایه‌گذاری</li>
+                    </ul>
+                    <button class="activate-btn" id="vip4-btn" onclick="activatePlan(4)">
+                        فعال‌سازی VIP 4
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="history-section">
+            <h3 style="margin-bottom: 15px; color: var(--gold);">📊 تاریخچه تراکنش‌ها</h3>
+            <div id="history-container">
+                <p style="color: var(--text-secondary); text-align: center; font-size: 13px;">
+                    هنوز تراکنشی انجام نشده است
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-icon">✅</div>
+            <h3>پرداخت موفق!</h3>
+            <p id="modal-message">پلن شما با موفقیت فعال شد.</p>
+            <button class="close-modal-btn" onclick="closeModal()">متوجه شدم</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="error-modal">
+        <div class="modal-content">
+            <div class="modal-icon">❌</div>
+            <h3>خطا!</h3>
+            <p id="error-message">مشکلی پیش آمده است.</p>
+            <button class="close-modal-btn" onclick="closeModal()">باشه</button>
+        </div>
+    </div>
+
+    <script>
+        // ============ CONFIGURATION ============
+        // آدرس ولت Tonkeeper شما
+        const MERCHANT_WALLET = 'UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ';
+        
+        // ⚠️ این دو خط رو با اطلاعات گیت‌هاب خودت جایگزین کن
+        const GITHUB_USERNAME = 'zaraton2026';
+        const GITHUB_REPO = 'ton-invest';
+        const MANIFEST_URL = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/tonconnect-manifest.json`;
+
+        // ============ INITIALIZATION ============
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        let tonConnectUI = null;
+        let currentWalletAddress = null;
+        let currentBalance = 0;
+
+        // Initialize TON Connect
+        function initTONConnect() {
+            if (typeof TONConnectUI === 'undefined') {
+                console.error('TON Connect not loaded');
+                setTimeout(initTONConnect, 500);
+                return;
+            }
+
+            tonConnectUI = new TONConnectUI({
+                manifestUrl: MANIFEST_URL,
+                buttonRootId: null
+            });
+
+            // Check if already connected
+            tonConnectUI.connectionRestored.then(restored => {
+                if (restored && tonConnectUI.connected) {
+                    updateWalletInfo();
+                }
+            });
+        }
+
+        // ============ WALLET CONNECTION ============
+        async function handleWalletConnection() {
+            if (!tonConnectUI) {
+                showError('کتابخونه TON Connect در حال بارگذاری است. لطفاً کمی صبر کنید.');
+                return;
+            }
+
+            try {
+                if (tonConnectUI.connected) {
+                    await tonConnectUI.disconnect();
+                    resetWalletUI();
+                    return;
+                }
+
+                showLoading(true);
+                const walletsList = await tonConnectUI.getWallets();
+                const embeddedWallet = walletsList.find(w => w.embedded);
+                
+                if (embeddedWallet) {
+                    await tonConnectUI.connectWallet(embeddedWallet);
+                    await updateWalletInfo();
+                } else {
+                    await tonConnectUI.openModal();
+                }
+            } catch (error) {
+                console.error('Wallet connection error:', error);
+                if (!error.message?.includes('User rejected')) {
+                    showError('خطا در اتصال به کیف پول. لطفاً دوباره تلاش کنید.');
+                }
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function updateWalletInfo() {
+            if (!tonConnectUI || !tonConnectUI.connected) return;
+
+            const wallet = tonConnectUI.wallet;
+            if (!wallet?.account?.address) return;
+            
+            currentWalletAddress = wallet.account.address;
+            
+            try {
+                const response = await fetch(
+                    `https://toncenter.com/api/v2/getAddressBalance?address=${currentWalletAddress}`
+                );
+                const data = await response.json();
+                currentBalance = (data.result / 1000000000).toFixed(2);
+            } catch (error) {
+                currentBalance = '0.00';
+            }
+
+            updateWalletUI();
+            loadUserData();
+        }
+
+        function updateWalletUI() {
+            const btn = document.getElementById('connect-wallet-btn');
+            const info = document.getElementById('wallet-info');
+            
+            if (currentWalletAddress) {
+                btn.textContent = '✓ قطع اتصال';
+                btn.classList.add('connected');
+                info.classList.add('active');
+                document.getElementById('wallet-address').textContent = 
+                    currentWalletAddress.substring(0, 8) + '...' + 
+                    currentWalletAddress.substring(currentWalletAddress.length - 6);
+                document.getElementById('wallet-balance').textContent = currentBalance + ' TON';
+            } else {
+                resetWalletUI();
+            }
+        }
+
+        function resetWalletUI() {
+            const btn = document.getElementById('connect-wallet-btn');
+            const info = document.getElementById('wallet-info');
+            
+            btn.textContent = 'اتصال به Tonkeeper';
+            btn.classList.remove('connected');
+            info.classList.remove('active');
+            currentWalletAddress = null;
+            currentBalance = 0;
+        }
+
+        // ============ PAYMENT PROCESSING ============
+        async function activatePlan(planNumber) {
+            if (!currentWalletAddress) {
+                showError('لطفاً ابتدا کیف پول TON خود را متصل کنید!');
+                return;
+            }
+
+            const prices = {1: 10, 2: 25, 3: 50, 4: 100};
+            const price = prices[planNumber];
+            
+            // Check VIP 1
+            if (planNumber === 1) {
+                const plans = getActivatedPlans();
+                if (plans.includes(1)) {
+                    showError('VIP 1 قبلاً فعال شده و فقط یکبار قابل استفاده است!');
+                    return;
+                }
+            }
+
+            // Disable button during payment
+            const btn = document.getElementById(`vip${planNumber}-btn`);
+            btn.disabled = true;
+
+            try {
+                showLoading(true);
+                
+                const transaction = {
+                    validUntil: Math.floor(Date.now() / 1000) + 600,
+                    messages: [
+                        {
+                            address: MERCHANT_WALLET,
+                            amount: (price * 1000000000).toString()
+                        }
+                    ]
+                };
+
+                const result = await tonConnectUI.sendTransaction(transaction);
+                
+                if (result?.boc) {
+                    const plans = getActivatedPlans();
+                    plans.push(planNumber);
+                    localStorage.setItem('activatedPlans', JSON.stringify(plans));
+                    
+                    addTransaction(planNumber, price, result.boc);
+                    
+                    if (planNumber === 1) {
+                        btn.classList.add('activated');
+                        btn.textContent = '✓ قبلاً فعال شده';
+                        btn.onclick = null;
+                    }
+                    
+                    showSuccess(`🎉 پلن VIP ${planNumber} با موفقیت فعال شد!\n\nمبلغ پرداختی: ${price} TON\n\nبه پلتفرم سرمایه‌گذاری خوش آمدید!`);
+                    saveUserData();
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                if (error.message?.includes('User rejected') || error.message?.includes('canceled')) {
+                    showError('پرداخت توسط شما لغو شد.');
+                } else {
+                    showError('خطا در پردازش تراکنش. لطفاً دوباره تلاش کنید.');
+                }
+            } finally {
+                showLoading(false);
+                btn.disabled = false;
+            }
+        }
+
+        // ============ DATA MANAGEMENT ============
+        function getStorageKey() {
+            return 'investData_' + (currentWalletAddress || 'guest');
+        }
+
+        function getActivatedPlans() {
+            const key = getStorageKey();
+            return JSON.parse(localStorage.getItem(key + '_plans') || '[]');
+        }
+
+        function getTransactions() {
+            const key = getStorageKey();
+            return JSON.parse(localStorage.getItem(key + '_txs') || '[]');
+        }
+
+        function addTransaction(plan, amount, txHash) {
+            const key = getStorageKey();
+            const transactions = getTransactions();
+            transactions.unshift({
+                plan: plan,
+                amount: amount,
+                txHash: txHash.substring(0, 10) + '...',
+                date: new Date().toLocaleDateString('fa-IR'),
+                time: new Date().toLocaleTimeString('fa-IR')
+            });
+            localStorage.setItem(key + '_txs', JSON.stringify(transactions));
+            updateHistoryUI(transactions);
+        }
+
+        function updateHistoryUI(transactions) {
+            const container = document.getElementById('history-container');
+            if (!transactions || transactions.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; font-size: 13px;">هنوز تراکنشی انجام نشده است</p>';
+                return;
+            }
+            
+            container.innerHTML = transactions.slice(0, 5).map(t => `
+                <div class="history-item">
+                    <span class="history-plan">VIP ${t.plan}</span>
+                    <span class="history-amount">${t.amount} TON</span>
+                    <span class="history-date">${t.date} - ${t.time}</span>
+                </div>
+            `).join('');
+        }
+
+        function loadUserData() {
+            if (currentWalletAddress) {
+                const plans = getActivatedPlans();
+                checkActivatedPlans(plans);
+                updateHistoryUI(getTransactions());
+            }
+        }
+
+        function saveUserData() {
+            // Already saved in respective functions
+        }
+
+        function checkActivatedPlans(plans) {
+            if (plans.includes(1)) {
+                const btn = document.getElementById('vip1-btn');
+                btn.classList.add('activated');
+                btn.textContent = '✓ قبلاً فعال شده';
+                btn.onclick = null;
+            }
+        }
+
+        // ============ UI HELPERS ============
+        function showLoading(show) {
+            const spinner = document.getElementById('loading-spinner');
+            if (show) {
+                spinner.classList.add('active');
+            } else {
+                spinner.classList.remove('active');
+            }
+        }
+
+        function showSuccess(message) {
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('success-modal').classList.add('active');
+        }
+
+        function showError(message) {
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').classList.remove('active');
+            document.getElementById('error-modal').classList.remove('active');
+        }
+
+        // Handle TON Connect status changes
+        if (typeof TONConnectUI !== 'undefined') {
+            TONConnectUI.onStatusChange(wallet => {
+                if (wallet) {
+                    updateWalletInfo();
+                } else {
+                    resetWalletUI();
+                }
+            });
+        }
+
+        // ============ STARTUP ============
+        window.addEventListener('load', () => {
+            initTONConnect();
+            // Load any saved data
+            const savedPlans = JSON.parse(localStorage.getItem('investData_guest_plans') || '[]');
+            if (savedPlans.length > 0) {
+                checkActivatedPlans(savedPlans);
+            }
+        });
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
