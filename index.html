@@ -490,19 +490,25 @@
         }
 
         function doTask(type) {
-            if (userData.tasks?.[type]) {
-                showModal('❌', 'Already Done', 'You already completed this task.');
-                return;
-            }
-            const url = type === 'channel' ? CHANNEL_URL : GROUP_URL;
-            window.open(url, '_blank');
-            
-            userData.tasks = userData.tasks || {};
-            userData.tasks[type] = true;
-            userData.taskBalance = (userData.taskBalance || 0) + 0.01;
-            saveUserData();
-            updateUI();
-            showModal('✅', 'Task Completed!', '0.01 TON added to your balance (non-withdrawable).');
+    if (userData.tasks?.[type]) {
+        showModal('❌', 'Already Done', 'You already completed this task.');
+        return;
+    }
+    
+    const url = type === 'channel' ? 'https://t.me/zaraton2026ai' : 'https://t.me/chatzaraton';
+    const botLink = 'https://t.me/zaratonTbot';
+    
+    // Open the link
+    window.open(url, '_blank');
+    
+    // Show instructions
+    showModal('📢', 'Verify Join', 
+        '1. Join the ' + (type === 'channel' ? 'channel' : 'group') + '<br>' +
+        '2. Then go to @zaratonTbot<br>' +
+        '3. Send: <b>/checkjoin ' + type + '</b><br><br>' +
+        '<a href="' + botLink + '"><button class="modal-btn">Go to Bot</button></a>'
+    );
+}
         }
 
         function requestWithdraw() {
