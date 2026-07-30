@@ -282,7 +282,7 @@
                 <button class="copy-btn" onclick="copyDepositAddress()">📋 Copy Address</button>
                 <p class="info-text" style="margin-top:10px;">Your UID: <strong id="user-uid">Loading...</strong></p>
                 <p class="info-text">⚠️ You MUST include your UID in the transaction comment, or your deposit won't be credited.</p>
-                <a href="https://t.me/zaratonVerifyBot" target="_blank"><button class="action-btn deposit-btn">🤖 Verify Deposit with Bot</button></a>
+               <a href="https://t.me/zaratonTbot?start=check" target="_blank"><button class="action-btn deposit-btn">🤖 Check & Verify Deposit</button></a>
             </div>
             <div class="wallet-card">
                 <h3>📤 Withdraw</h3>
@@ -370,7 +370,7 @@
         tg.expand();
 
         const MERCHANT_WALLET = 'UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ';
-        const BOT_USERNAME = 'zaratonVerifyBot';
+        const BOT_USERNAME = 'zaratonTbot';
         const CHANNEL_URL = 'https://t.me/zaraton2026ai';
         const GROUP_URL = 'https://t.me/chatzaraton';
         
@@ -381,7 +381,7 @@
         if (tg.initDataUnsafe?.user) {
             userId = tg.initDataUnsafe.user.id;
             document.getElementById('user-uid').textContent = userId;
-            document.getElementById('ref-link').textContent = `https://t.me/${BOT_USERNAME}?start=${userId}`;
+       document.getElementById('ref-link').textContent = `https://t.me/zaratonTbot?start=${userId}`;
             loadUserData();
         }
 
