@@ -350,18 +350,18 @@
 
     <!-- Bottom Nav -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchPage('home')">
-            <div class="nav-icon">🏠</div><div class="nav-label">Home</div>
-        </div>
-        <div class="nav-item" onclick="switchPage('wallet')">
-            <div class="nav-icon">💳</div><div class="nav-label">Wallet</div>
-        </div>
-        <div class="nav-item" onclick="switchPage('task')">
-            <div class="nav-icon">✅</div><div class="nav-label">Task</div>
-        </div>
-        <div class="nav-item" onclick="switchPage('referral')">
-            <div class="nav-icon">👥</div><div class="nav-label">Referral</div>
-        </div>
+       <div class="nav-item active" onclick="switchPage('home', this)">
+    <div class="nav-icon">🏠</div><div class="nav-label">Home</div>
+</div>
+<div class="nav-item" onclick="switchPage('wallet', this)">
+    <div class="nav-icon">💳</div><div class="nav-label">Wallet</div>
+</div>
+<div class="nav-item" onclick="switchPage('task', this)">
+    <div class="nav-icon">✅</div><div class="nav-label">Task</div>
+</div>
+<div class="nav-item" onclick="switchPage('referral', this)">
+    <div class="nav-icon">👥</div><div class="nav-label">Referral</div>
+</div>
     </div>
 
     <script>
@@ -422,13 +422,13 @@
             }
         }
 
-        function switchPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + page).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            if (page === 'home') updateUI();
-        }
+        function switchPage(page, element) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (element) element.classList.add('active');
+    if (page === 'home') updateUI();
+}
 
         function toggleMenu() {
             document.getElementById('side-menu').classList.toggle('active');
