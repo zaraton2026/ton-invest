@@ -36,12 +36,8 @@
         }
 
         .bg-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            opacity: 0.15; pointer-events: none; z-index: 0;
             animation: orbFloat 12s ease-in-out infinite;
         }
         .bg-orb.orb-1 { width: 400px; height: 400px; background: #3b82f6; top: -100px; left: -100px; animation-delay: 0s; }
@@ -86,12 +82,7 @@
         }
         .side-menu.active { right: 0; }
         .side-menu-title { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--text-secondary); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); }
-        
-        .side-menu-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 14px;
-            cursor: pointer; margin-bottom: 6px; color: var(--text); text-decoration: none;
-            transition: all 0.3s ease; background: transparent;
-        }
+        .side-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 14px; cursor: pointer; margin-bottom: 6px; color: var(--text); text-decoration: none; transition: all 0.3s ease; background: transparent; }
         .side-menu-item:hover { background: var(--glass-hover); }
         .side-menu-item.support { border-left: 2px solid var(--accent); }
         .side-menu-item.faq { border-left: 2px solid var(--green); }
@@ -107,8 +98,8 @@
 
         /* Header */
         .header { text-align: center; padding: 40px 0 24px; }
-        .logo-img { width: 80px; height: 80px; border-radius: 20px; margin-bottom: 15px; animation: diamondFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); object-fit: cover; }
-        @keyframes diamondFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.06); } }
+        .logo-img { width: 80px; height: 80px; border-radius: 20px; margin-bottom: 15px; animation: logoFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); object-fit: cover; display: block; margin-left: auto; margin-right: auto; }
+        @keyframes logoFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.06); } }
         .platform-name {
             font-size: 30px; font-weight: 900; letter-spacing: 2px;
             background: linear-gradient(135deg, #ffd700, #ffed4a, #ffd700, #ffaa00);
@@ -124,12 +115,7 @@
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Glass Card */
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 20px; margin-bottom: 14px;
-            transition: all 0.3s ease;
-        }
+        .glass-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px; margin-bottom: 14px; }
 
         /* VIP Cards */
         .vip-card { position: relative; overflow: hidden; }
@@ -177,18 +163,8 @@
         .ref-stat-lbl { font-size: 10px; color: var(--text-secondary); letter-spacing: 1px; }
 
         /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-            background: rgba(10, 10, 25, 0.9); backdrop-filter: blur(30px);
-            border-top: 1px solid var(--glass-border);
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 6px 0 10px;
-        }
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            cursor: pointer; padding: 8px 16px; border-radius: 14px;
-            transition: all 0.3s ease; color: var(--text-secondary);
-        }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: rgba(10, 10, 25, 0.9); backdrop-filter: blur(30px); border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; align-items: center; padding: 6px 0 10px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 8px 16px; border-radius: 14px; transition: all 0.3s ease; color: var(--text-secondary); }
         .nav-item.active { color: #fff; background: var(--glass); }
         .nav-item svg { width: 22px; height: 22px; transition: all 0.3s ease; }
         .nav-item.active svg { filter: drop-shadow(0 0 8px rgba(59,130,246,0.5)); }
@@ -202,9 +178,7 @@
         .modal-icon { font-size: 44px; margin-bottom: 12px; }
         .modal-box h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
         .modal-box p { color: var(--text-secondary); font-size: 12px; line-height: 1.7; margin-bottom: 16px; }
-
         .input-glass { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; margin: 6px 0; outline: none; }
-
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
@@ -221,22 +195,15 @@
     <div class="side-menu-overlay" id="side-menu-overlay" onclick="closeMenu()"></div>
     <div class="side-menu" id="side-menu">
         <div class="side-menu-title">Menu</div>
-        <a class="side-menu-item support" href="https://t.me/zaraton2026" target="_blank">
-            <span class="side-menu-icon">💬</span><span class="side-menu-label">Support</span>
-        </a>
-        <div class="side-menu-item faq" onclick="openFAQ()">
-            <span class="side-menu-icon">❓</span><span class="side-menu-label">FAQ</span>
-        </div>
-        <div class="side-menu-item history" onclick="toggleHistory()">
-            <span class="side-menu-icon">📊</span><span class="side-menu-label">History</span>
-            <span id="history-arrow" style="font-size:10px;">▼</span>
-        </div>
+        <a class="side-menu-item support" href="https://t.me/zaraton2026" target="_blank"><span class="side-menu-icon">💬</span><span class="side-menu-label">Support</span></a>
+        <div class="side-menu-item faq" onclick="openFAQ()"><span class="side-menu-icon">❓</span><span class="side-menu-label">FAQ</span></div>
+        <div class="side-menu-item history" onclick="toggleHistory()"><span class="side-menu-icon">📊</span><span class="side-menu-label">History</span><span id="history-arrow" style="font-size:10px;">▼</span></div>
         <div class="history-panel" id="history-panel"></div>
     </div>
 
     <div class="container">
         <div class="header">
-            <img class="logo-img" src="./logo.png" alt="ZARATON Logo">
+            <img class="logo-img" src="./logo.png" alt="ZARATON Logo" onerror="this.style.display='none'">
             <h1 class="platform-name">ZARATON</h1>
             <p class="subtitle">VIP Investment Ecosystem</p>
         </div>
@@ -274,7 +241,7 @@
                 <div class="address-box">UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ</div>
                 <button class="glass-btn blue small" onclick="copyAddress()">📋 Copy Address</button>
                 <p style="font-size:11px;margin-top:10px;">⚠️ <b>Important:</b> Include your UID in the transaction <b>comment/memo</b>:</p>
-                <div class="uid-box" id="user-uid-display" onclick="copyUid()" title="Click to copy">UID: <span id="user-uid">---</span> 📋</div>
+                <div class="uid-box" onclick="copyUid()" title="Click to copy">UID: <span id="user-uid">---</span> 📋</div>
                 <p style="font-size:10px;color:var(--red);margin-top:6px;">Without UID in comment, deposit won't be credited!</p>
                 <button class="glass-btn green" style="margin-top:8px;" onclick="verifyDeposit()">🤖 Verify Deposit</button>
             </div>
@@ -412,129 +379,90 @@
             document.getElementById('hamburger-btn').classList.remove('active');
         }
         
-        function openFAQ() {
-            document.getElementById('faq-modal').classList.add('active');
-            closeMenu();
-        }
+        function openFAQ() { document.getElementById('faq-modal').classList.add('active'); closeMenu(); }
         
         function toggleHistory() {
-            const p = document.getElementById('history-panel');
-            const a = document.getElementById('history-arrow');
+            const p = document.getElementById('history-panel'), a = document.getElementById('history-arrow');
             p.classList.toggle('active');
             a.textContent = p.classList.contains('active') ? '▲' : '▼';
             if (p.classList.contains('active')) {
                 const txs = userData.transactions || [];
-                p.innerHTML = txs.length ? txs.slice(0, 10).map(t => 
-                    `<div class="history-mini-item"><span class="history-mini-plan">VIP ${t.plan || 'Deposit'}</span><span class="history-mini-amount">${t.amount} GRAM</span><span>${t.date}</span></div>`
-                ).join('') : '<p style="color:var(--text-secondary);font-size:10px;text-align:center;">No transactions</p>';
+                p.innerHTML = txs.length ? txs.slice(0, 10).map(t => `<div class="history-mini-item"><span class="history-mini-plan">${t.plan||'Deposit'}</span><span class="history-mini-amount">${t.amount} GRAM</span><span>${t.date}</span></div>`).join('') : '<p style="color:var(--text-secondary);font-size:10px;text-align:center;">No transactions</p>';
             }
         }
         
-        function copyAddress() {
-            navigator.clipboard.writeText(MERCHANT_WALLET).then(() => showModal('✅', 'Copied!', 'Address copied. Send GRAM with your UID in comment.'));
-        }
-        
-        function copyUid() {
-            navigator.clipboard.writeText(userId.toString()).then(() => showModal('✅', 'UID Copied!', 'Your UID copied. Paste it in the transaction comment.'));
-        }
-        
-        function copyRefLink() {
-            navigator.clipboard.writeText(document.getElementById('ref-link').textContent).then(() => showModal('✅', 'Copied!', 'Share with friends!'));
-        }
+        function copyAddress() { navigator.clipboard.writeText(MERCHANT_WALLET).then(() => showModal('✅','Copied!','Address copied. Send GRAM with UID in comment.')); }
+        function copyUid() { navigator.clipboard.writeText(userId.toString()).then(() => showModal('✅','UID Copied!','Paste your UID in the transaction comment.')); }
+        function copyRefLink() { navigator.clipboard.writeText(document.getElementById('ref-link').textContent).then(() => showModal('✅','Copied!','Share with friends!')); }
         
         async function verifyDeposit() {
-            showModal('⏳', 'Checking...', 'Verifying your deposit on blockchain...');
+            showModal('⏳','Checking...','Verifying on blockchain...');
             try {
                 const res = await fetch(`${API_URL}/check/${userId}`);
                 const data = await res.json();
                 if (data.success) {
-                    userData.balance = (userData.balance || 0) + data.amount;
-                    userData.transactions = userData.transactions || [];
-                    userData.transactions.unshift({ plan: 'Deposit', amount: data.amount, date: new Date().toLocaleDateString('en-US') });
-                    saveUserData();
-                    updateUI();
-                    showModal('✅', 'Confirmed!', `${data.amount} GRAM added to your balance.`);
+                    userData.balance = (userData.balance||0) + data.amount;
+                    userData.transactions = (userData.transactions||[]);
+                    userData.transactions.unshift({plan:'Deposit',amount:data.amount,date:new Date().toLocaleDateString('en-US')});
+                    saveUserData(); updateUI();
+                    showModal('✅','Confirmed!',`${data.amount} GRAM added.`);
                 } else {
-                    showModal('❌', 'Not Found', data.message || 'No new deposits. Make sure you included your UID in the comment.');
+                    showModal('❌','Not Found',data.message||'No deposits found. Include UID in comment.');
                 }
-            } catch (e) {
-                showModal('❌', 'Error', 'Could not verify. Try again.');
-            }
+            } catch(e) { showModal('❌','Error','Could not verify.'); }
         }
         
         function buyPlan(n) {
-            if (n === 1 && (userData.plans || []).includes(1)) { showModal('❌', 'Error', 'VIP 1 only once.'); return; }
-            const prices = { 1: 10, 2: 25, 3: 50, 4: 100 };
-            const price = prices[n];
-            const total = (userData.balance || 0) + (userData.taskBalance || 0);
-            if (total < price) { showModal('❌', 'Insufficient', `Need ${price} GRAM.`); return; }
-            let rem = price;
-            if (userData.balance >= rem) { userData.balance -= rem; rem = 0; }
-            else { rem -= userData.balance; userData.balance = 0; userData.taskBalance -= rem; }
-            userData.plans.push(n);
-            const periods = { 1: 30, 2: 20, 3: 15, 4: 10 };
-            userData.planExpiry = userData.planExpiry || {};
-            userData.planExpiry[n] = Date.now() + (periods[n] * 86400000);
-            userData.transactions.unshift({ plan: n, amount: price, date: new Date().toLocaleDateString('en-US') });
-            saveUserData();
-            updateUI();
-            showModal('🎉', 'Activated!', `VIP ${n} activated!\n${price} GRAM deducted.`);
+            if (n===1 && (userData.plans||[]).includes(1)) { showModal('❌','Error','VIP 1 only once.'); return; }
+            const p={1:10,2:25,3:50,4:100}, pr=p[n], t=(userData.balance||0)+(userData.taskBalance||0);
+            if (t<pr) { showModal('❌','Insufficient',`Need ${pr} GRAM.`); return; }
+            let r=pr; if (userData.balance>=r) { userData.balance-=r; r=0; } else { r-=userData.balance; userData.balance=0; userData.taskBalance-=r; }
+            userData.plans.push(n); userData.planExpiry=userData.planExpiry||{};
+            userData.planExpiry[n]=Date.now()+({1:30,2:20,3:15,4:10}[n]*86400000);
+            userData.transactions.unshift({plan:n,amount:pr,date:new Date().toLocaleDateString('en-US')});
+            saveUserData(); updateUI();
+            showModal('🎉','Activated!',`VIP ${n} activated!\n${pr} GRAM deducted.`);
         }
         
-        function doTask(type) {
-            if (userData.tasks?.[type]) { showModal('❌', 'Done', 'Already completed.'); return; }
-            const url = type === 'channel' ? 'https://t.me/zaraton2026ai' : 'https://t.me/chatzaraton';
-            
-            userData.tasks = userData.tasks || {};
-            userData.tasks[type] = true;
-            userData.taskBalance = (userData.taskBalance || 0) + 0.01;
-            saveUserData();
-            updateUI();
-            
-            window.open(url, '_blank');
-            showModal('✅', 'Reward Earned!', `+0.01 GRAM added!\n(non-withdrawable)`);
+        async function doTask(type) {
+            if (userData.tasks?.[type]) { showModal('❌','Done','Already completed.'); return; }
+            const url = type==='channel'?'https://t.me/zaraton2026ai':'https://t.me/chatzaraton';
+            window.open(url,'_blank');
+            showModal('📢','Verify Join',`Join the ${type}, then click:<br><br><button class="glass-btn green" onclick="verifyTask('${type}')">✅ I've Joined</button>`);
+        }
+        
+        async function verifyTask(type) {
+            closeModal(); showModal('⏳','Checking...','Verifying membership...');
+            try {
+                const res = await fetch(`${API_URL}/join`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uid:userId,type})});
+                const data = await res.json();
+                if (data.success) {
+                    userData.tasks=userData.tasks||{}; userData.tasks[type]=true;
+                    userData.taskBalance=(userData.taskBalance||0)+0.01;
+                    saveUserData(); updateUI();
+                    showModal('✅','Verified!','+0.01 GRAM added!');
+                } else {
+                    showModal('❌','Not Joined',`Join the ${type} first.`);
+                }
+            } catch(e) { showModal('❌','Error','Could not verify.'); }
         }
         
         function requestWithdraw() {
-            const addr = document.getElementById('withdraw-address').value.trim();
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            
-            if (!addr) { showModal('❌', 'Error', 'Enter your wallet address.'); return; }
-            if (!amount || amount < 2) { showModal('❌', 'Error', 'Minimum withdrawal is 2 GRAM.'); return; }
-            if (amount > (userData.balance || 0)) { showModal('❌', 'Error', 'Insufficient balance.'); return; }
-            if (!(userData.plans || []).length) { showModal('❌', 'No Plan', 'You must purchase a plan first.'); return; }
-            
-            let can = false;
-            if (userData.planExpiry) {
-                for (const [k, v] of Object.entries(userData.planExpiry)) {
-                    if (Date.now() >= v && (userData.plans || []).includes(parseInt(k))) can = true;
-                }
-            }
-            if (!can) { showModal('❌', 'Locked', 'Plan period not ended yet.'); return; }
-            
-            userData.balance -= amount;
-            userData.transactions.unshift({ plan: 'Withdraw', amount: amount, date: new Date().toLocaleDateString('en-US') });
-            saveUserData();
-            updateUI();
-            showModal('✅', 'Submitted', `${amount} GRAM withdrawal to ${addr.substring(0, 6)}... requested.`);
+            const a=document.getElementById('withdraw-address').value.trim(),amt=parseFloat(document.getElementById('withdraw-amount').value);
+            if(!a){showModal('❌','Error','Enter address.');return;}
+            if(!amt||amt<2){showModal('❌','Error','Min 2 GRAM.');return;}
+            if(amt>(userData.balance||0)){showModal('❌','Error','Insufficient balance.');return;}
+            if(!(userData.plans||[]).length){showModal('❌','No Plan','Buy a plan first.');return;}
+            let can=false; if(userData.planExpiry){for(const[k,v]of Object.entries(userData.planExpiry)){if(Date.now()>=v&&(userData.plans||[]).includes(parseInt(k)))can=true;}}
+            if(!can){showModal('❌','Locked','Plan period not ended.');return;}
+            userData.balance-=amt; userData.transactions.unshift({plan:'Withdraw',amount:amt,date:new Date().toLocaleDateString('en-US')});
+            saveUserData(); updateUI();
+            showModal('✅','Submitted',`${amt} GRAM → ${a.substring(0,6)}...`);
         }
         
-        function showModal(icon, title, msg) {
-            document.getElementById('modal-icon').textContent = icon;
-            document.getElementById('modal-title').textContent = title;
-            document.getElementById('modal-message').innerHTML = msg;
-            document.getElementById('generic-modal').classList.add('active');
-        }
-        
-        function closeModal() {
-            document.getElementById('faq-modal').classList.remove('active');
-            document.getElementById('generic-modal').classList.remove('active');
-        }
-        
-        window.onclick = function(e) {
-            if (e.target.classList.contains('modal')) closeModal();
-        };
-        
+        function showModal(icon,title,msg){document.getElementById('modal-icon').textContent=icon;document.getElementById('modal-title').textContent=title;document.getElementById('modal-message').innerHTML=msg;document.getElementById('generic-modal').classList.add('active');}
+        function closeModal(){document.getElementById('faq-modal').classList.remove('active');document.getElementById('generic-modal').classList.remove('active');}
+        window.onclick=function(e){if(e.target.classList.contains('modal'))closeModal();};
         updateUI();
     </script>
 </body>
