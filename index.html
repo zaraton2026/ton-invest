@@ -107,7 +107,7 @@
 
         /* Header */
         .header { text-align: center; padding: 40px 0 24px; }
-        .logo-icon { font-size: 52px; animation: diamondFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4)); }
+        .logo-img { width: 80px; height: 80px; border-radius: 20px; margin-bottom: 15px; animation: diamondFloat 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)); object-fit: cover; }
         @keyframes diamondFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.06); } }
         .platform-name {
             font-size: 30px; font-weight: 900; letter-spacing: 2px;
@@ -161,12 +161,14 @@
         .glass-btn.red { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1); }
         .glass-btn.green { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.1); }
         .glass-btn.activated { opacity: 0.5; cursor: default; pointer-events: none; }
+        .glass-btn.small { width: auto; padding: 8px 16px; font-size: 11px; }
         .one-time-badge { background: rgba(239,68,68,0.15); color: #ef4444; padding: 2px 8px; border-radius: 10px; font-size: 9px; font-weight: 600; margin-right: 6px; }
 
         .balance-display { font-size: 36px; font-weight: 900; text-align: center; padding: 20px; background: var(--glass); border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 14px; }
         .balance-amount { background: linear-gradient(135deg, #10b981, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .address-box { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; font-size: 11px; font-family: monospace; word-break: break-all; margin: 10px 0; border: 1px solid var(--glass-border); }
+        .uid-box { background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; color: var(--gold); display: inline-block; margin: 6px 0; border: 1px solid var(--glass-border); cursor: pointer; }
         .task-row { display: flex; justify-content: space-between; align-items: center; }
         .task-reward { color: var(--green); font-size: 11px; font-weight: 600; }
         .ref-stats { display: flex; justify-content: space-around; margin: 16px 0; }
@@ -234,7 +236,7 @@
 
     <div class="container">
         <div class="header">
-            <div class="logo-icon">💎</div>
+            <img class="logo-img" src="https://i.postimg.cc/XG96H4Lh/zaraton-logo.png" alt="ZARATON Logo">
             <h1 class="platform-name">ZARATON</h1>
             <p class="subtitle">VIP Investment Ecosystem</p>
         </div>
@@ -242,22 +244,22 @@
         <!-- HOME -->
         <div class="page active" id="page-home">
             <div class="glass-card vip-card vip-1">
-                <div class="vip-header"><span class="vip-badge">VIP 1</span><span class="vip-price">10 <small>TON</small></span></div>
+                <div class="vip-header"><span class="vip-badge">VIP 1</span><span class="vip-price">10 <small>GRAM</small></span></div>
                 <ul class="vip-features"><li>Monthly profit 2%</li><li>30 days period</li><li>Standard support</li></ul>
                 <button class="glass-btn blue" id="vip1-btn" onclick="buyPlan(1)"><span class="one-time-badge">ONCE</span>Activate VIP 1</button>
             </div>
             <div class="glass-card vip-card vip-2">
-                <div class="vip-header"><span class="vip-badge">VIP 2</span><span class="vip-price">25 <small>TON</small></span></div>
+                <div class="vip-header"><span class="vip-badge">VIP 2</span><span class="vip-price">25 <small>GRAM</small></span></div>
                 <ul class="vip-features"><li>20-day profit 4%</li><li>20 days period</li><li>VIP support</li><li>Instant withdrawal</li></ul>
                 <button class="glass-btn purple" id="vip2-btn" onclick="buyPlan(2)">Activate VIP 2</button>
             </div>
             <div class="glass-card vip-card vip-3">
-                <div class="vip-header"><span class="vip-badge">VIP 3</span><span class="vip-price">50 <small>TON</small></span></div>
+                <div class="vip-header"><span class="vip-badge">VIP 3</span><span class="vip-price">50 <small>GRAM</small></span></div>
                 <ul class="vip-features"><li>15-day profit 6%</li><li>15 days period</li><li>24/7 support</li><li>Monthly rewards</li></ul>
                 <button class="glass-btn gold" id="vip3-btn" onclick="buyPlan(3)">Activate VIP 3</button>
             </div>
             <div class="glass-card vip-card vip-4">
-                <div class="vip-header"><span class="vip-badge">VIP 4</span><span class="vip-price">100 <small>TON</small></span></div>
+                <div class="vip-header"><span class="vip-badge">VIP 4</span><span class="vip-price">100 <small>GRAM</small></span></div>
                 <ul class="vip-features"><li>10-day profit 8%</li><li>10 days period</li><li>Dedicated support</li><li>Weekly rewards</li></ul>
                 <button class="glass-btn red" id="vip4-btn" onclick="buyPlan(4)">Activate VIP 4</button>
             </div>
@@ -265,20 +267,23 @@
 
         <!-- WALLET -->
         <div class="page" id="page-wallet">
-            <div class="balance-display"><span style="font-size:13px;">Balance</span><br><span class="balance-amount" id="user-balance">0.00</span> <small>TON</small></div>
+            <div class="balance-display"><span style="font-size:13px;">Balance</span><br><span class="balance-amount" id="user-balance">0.00</span> <small>GRAM</small></div>
             <div class="glass-card">
                 <h3 style="font-size:14px;margin-bottom:12px;">📥 Deposit</h3>
-                <p style="font-size:11px;">Send TON with your UID in comment:</p>
+                <p style="font-size:11px;">Send GRAM to this address:</p>
                 <div class="address-box">UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ</div>
-                <button class="glass-btn blue" onclick="copyAddress()">📋 Copy Address</button>
-                <p style="font-size:11px;margin-top:8px;">UID: <strong id="user-uid">---</strong></p>
-                <button class="glass-btn green" style="margin-top:6px;" onclick="verifyDeposit()">🤖 Verify Deposit</button>
+                <button class="glass-btn blue small" onclick="copyAddress()">📋 Copy Address</button>
+                <p style="font-size:11px;margin-top:10px;">⚠️ <b>Important:</b> Include your UID in the transaction <b>comment/memo</b>:</p>
+                <div class="uid-box" id="user-uid-display" onclick="copyUid()" title="Click to copy">UID: <span id="user-uid">---</span> 📋</div>
+                <p style="font-size:10px;color:var(--red);margin-top:6px;">Without UID in comment, deposit won't be credited!</p>
+                <button class="glass-btn green" style="margin-top:8px;" onclick="verifyDeposit()">🤖 Verify Deposit</button>
             </div>
             <div class="glass-card">
                 <h3 style="font-size:14px;margin-bottom:12px;">📤 Withdraw</h3>
-                <p style="font-size:11px;">Only after plan period ends.</p>
-                <input class="input-glass" type="text" placeholder="Your TON address" id="withdraw-address">
-                <input class="input-glass" type="number" placeholder="Amount (TON)" id="withdraw-amount">
+                <p style="font-size:11px;">Minimum withdrawal: <b>2 GRAM</b></p>
+                <p style="font-size:11px;">Only available after purchasing a plan.</p>
+                <input class="input-glass" type="text" placeholder="Your GRAM wallet address" id="withdraw-address">
+                <input class="input-glass" type="number" placeholder="Amount (min 2 GRAM)" id="withdraw-amount" min="2">
                 <button class="glass-btn green" onclick="requestWithdraw()">Request Withdrawal</button>
             </div>
         </div>
@@ -287,12 +292,12 @@
         <div class="page" id="page-task">
             <h3 style="font-size:16px;margin-bottom:16px;">🎯 Earn Rewards</h3>
             <div class="glass-card task-row">
-                <div><div style="font-weight:600;font-size:13px;">Join Channel</div><div class="task-reward">+0.01 TON</div></div>
-                <button class="glass-btn blue" style="width:auto;padding:8px 20px;" id="task-channel-btn" onclick="doTask('channel')">Join</button>
+                <div><div style="font-weight:600;font-size:13px;">Join Channel</div><div class="task-reward">+0.01 GRAM</div></div>
+                <button class="glass-btn blue small" id="task-channel-btn" onclick="doTask('channel')">Join</button>
             </div>
             <div class="glass-card task-row">
-                <div><div style="font-weight:600;font-size:13px;">Join Group</div><div class="task-reward">+0.01 TON</div></div>
-                <button class="glass-btn purple" style="width:auto;padding:8px 20px;" id="task-group-btn" onclick="doTask('group')">Join</button>
+                <div><div style="font-weight:600;font-size:13px;">Join Group</div><div class="task-reward">+0.01 GRAM</div></div>
+                <button class="glass-btn purple small" id="task-group-btn" onclick="doTask('group')">Join</button>
             </div>
             <p style="font-size:10px;margin-top:12px;">⚠️ Task rewards cannot be withdrawn.</p>
         </div>
@@ -308,7 +313,7 @@
             <div class="glass-card">
                 <div class="ref-stats">
                     <div class="ref-stat"><div class="ref-stat-val" id="ref-count">0</div><div class="ref-stat-lbl">REFERRALS</div></div>
-                    <div class="ref-stat"><div class="ref-stat-val" id="ref-earnings">0.00</div><div class="ref-stat-lbl">TON EARNED</div></div>
+                    <div class="ref-stat"><div class="ref-stat-val" id="ref-earnings">0.00</div><div class="ref-stat-lbl">GRAM EARNED</div></div>
                 </div>
             </div>
         </div>
@@ -318,8 +323,8 @@
     <div class="modal" id="faq-modal">
         <div class="modal-box" style="max-height:75vh;overflow-y:auto;text-align:left;">
             <h3 style="text-align:center;">❓ FAQ</h3>
-            <div class="glass-card" style="margin:8px 0;"><strong>How to deposit?</strong><p style="margin:4px 0 0;">Copy address → Send TON with UID in comment → Click Verify Deposit</p></div>
-            <div class="glass-card" style="margin:8px 0;"><strong>When can I withdraw?</strong><p style="margin:4px 0 0;">Only after plan period ends. VIP1=30d, VIP2=20d, VIP3=15d, VIP4=10d.</p></div>
+            <div class="glass-card" style="margin:8px 0;"><strong>How to deposit?</strong><p style="margin:4px 0 0;">Copy address → Send GRAM <b>with your UID in comment</b> → Click Verify Deposit</p></div>
+            <div class="glass-card" style="margin:8px 0;"><strong>When can I withdraw?</strong><p style="margin:4px 0 0;">Only after purchasing a plan and plan period ends. Min 2 GRAM.</p></div>
             <div class="glass-card" style="margin:8px 0;"><strong>Task rewards?</strong><p style="margin:4px 0 0;">Not withdrawable. Only plan profits can be withdrawn.</p></div>
             <button class="glass-btn blue" onclick="closeModal()" style="margin-top:12px;">Close</button>
         </div>
@@ -420,13 +425,17 @@
             if (p.classList.contains('active')) {
                 const txs = userData.transactions || [];
                 p.innerHTML = txs.length ? txs.slice(0, 10).map(t => 
-                    `<div class="history-mini-item"><span class="history-mini-plan">VIP ${t.plan}</span><span class="history-mini-amount">${t.amount} TON</span><span>${t.date}</span></div>`
+                    `<div class="history-mini-item"><span class="history-mini-plan">VIP ${t.plan || 'Deposit'}</span><span class="history-mini-amount">${t.amount} GRAM</span><span>${t.date}</span></div>`
                 ).join('') : '<p style="color:var(--text-secondary);font-size:10px;text-align:center;">No transactions</p>';
             }
         }
         
         function copyAddress() {
-            navigator.clipboard.writeText(MERCHANT_WALLET).then(() => showModal('✅', 'Copied!', 'Send TON with your UID in comment.'));
+            navigator.clipboard.writeText(MERCHANT_WALLET).then(() => showModal('✅', 'Copied!', 'Address copied. Send GRAM with your UID in comment.'));
+        }
+        
+        function copyUid() {
+            navigator.clipboard.writeText(userId.toString()).then(() => showModal('✅', 'UID Copied!', 'Your UID copied. Paste it in the transaction comment.'));
         }
         
         function copyRefLink() {
@@ -444,9 +453,9 @@
                     userData.transactions.unshift({ plan: 'Deposit', amount: data.amount, date: new Date().toLocaleDateString('en-US') });
                     saveUserData();
                     updateUI();
-                    showModal('✅', 'Confirmed!', `${data.amount} TON added to your balance.`);
+                    showModal('✅', 'Confirmed!', `${data.amount} GRAM added to your balance.`);
                 } else {
-                    showModal('❌', 'Not Found', data.message || 'No new deposits. Make sure UID is in comment.');
+                    showModal('❌', 'Not Found', data.message || 'No new deposits. Make sure you included your UID in the comment.');
                 }
             } catch (e) {
                 showModal('❌', 'Error', 'Could not verify. Try again.');
@@ -458,7 +467,7 @@
             const prices = { 1: 10, 2: 25, 3: 50, 4: 100 };
             const price = prices[n];
             const total = (userData.balance || 0) + (userData.taskBalance || 0);
-            if (total < price) { showModal('❌', 'Insufficient', `Need ${price} TON.`); return; }
+            if (total < price) { showModal('❌', 'Insufficient', `Need ${price} GRAM.`); return; }
             let rem = price;
             if (userData.balance >= rem) { userData.balance -= rem; rem = 0; }
             else { rem -= userData.balance; userData.balance = 0; userData.taskBalance -= rem; }
@@ -469,30 +478,45 @@
             userData.transactions.unshift({ plan: n, amount: price, date: new Date().toLocaleDateString('en-US') });
             saveUserData();
             updateUI();
-            showModal('🎉', 'Activated!', `VIP ${n} activated!\n${price} TON deducted.`);
+            showModal('🎉', 'Activated!', `VIP ${n} activated!\n${price} GRAM deducted.`);
         }
         
         function doTask(type) {
             if (userData.tasks?.[type]) { showModal('❌', 'Done', 'Already completed.'); return; }
             const url = type === 'channel' ? 'https://t.me/zaraton2026ai' : 'https://t.me/chatzaraton';
+            
+            userData.tasks = userData.tasks || {};
+            userData.tasks[type] = true;
+            userData.taskBalance = (userData.taskBalance || 0) + 0.01;
+            saveUserData();
+            updateUI();
+            
             window.open(url, '_blank');
-            showModal('📢', 'Verify', `Join the ${type}, then use the bot to verify.`);
+            showModal('✅', 'Reward Earned!', `+0.01 GRAM added!\n(non-withdrawable)`);
         }
         
         function requestWithdraw() {
             const addr = document.getElementById('withdraw-address').value.trim();
             const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            if (!addr) { showModal('❌', 'Error', 'Enter address.'); return; }
-            if (!amount || amount <= 0) { showModal('❌', 'Error', 'Invalid amount.'); return; }
+            
+            if (!addr) { showModal('❌', 'Error', 'Enter your wallet address.'); return; }
+            if (!amount || amount < 2) { showModal('❌', 'Error', 'Minimum withdrawal is 2 GRAM.'); return; }
             if (amount > (userData.balance || 0)) { showModal('❌', 'Error', 'Insufficient balance.'); return; }
+            if (!(userData.plans || []).length) { showModal('❌', 'No Plan', 'You must purchase a plan first.'); return; }
+            
             let can = false;
             if (userData.planExpiry) {
                 for (const [k, v] of Object.entries(userData.planExpiry)) {
                     if (Date.now() >= v && (userData.plans || []).includes(parseInt(k))) can = true;
                 }
             }
-            if (!can) { showModal('❌', 'Locked', 'Plan period not ended.'); return; }
-            showModal('✅', 'Submitted', `${amount} TON → ${addr.substring(0, 6)}...`);
+            if (!can) { showModal('❌', 'Locked', 'Plan period not ended yet.'); return; }
+            
+            userData.balance -= amount;
+            userData.transactions.unshift({ plan: 'Withdraw', amount: amount, date: new Date().toLocaleDateString('en-US') });
+            saveUserData();
+            updateUI();
+            showModal('✅', 'Submitted', `${amount} GRAM withdrawal to ${addr.substring(0, 6)}... requested.`);
         }
         
         function showModal(icon, title, msg) {
