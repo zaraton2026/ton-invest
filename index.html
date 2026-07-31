@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zaraton2026 - Investment Platform</title>
+    <title>ZARATON - Investment Platform</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -35,7 +35,6 @@
             position: relative;
         }
 
-        /* Animated gradient orb */
         .bg-orb {
             position: fixed;
             border-radius: 50%;
@@ -68,15 +67,21 @@
             transition: all 0.3s ease;
         }
         .hamburger-btn span { display: block; width: 18px; height: 1.5px; background: #fff; border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger-btn.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+        .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
 
-        .side-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 99; opacity: 0; pointer-events: none; transition: all 0.3s ease; }
+        .side-menu-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            z-index: 98; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
         .side-menu-overlay.active { opacity: 1; pointer-events: all; }
 
         .side-menu {
             position: fixed; top: 0; right: -320px; width: 280px; height: 100%;
-            background: rgba(15, 15, 30, 0.95); backdrop-filter: blur(30px);
-            border-left: 1px solid var(--glass-border); z-index: 100;
-            padding: 80px 20px 20px; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(15, 15, 30, 0.98); backdrop-filter: blur(30px);
+            border-left: 1px solid var(--glass-border); z-index: 99;
+            padding: 80px 20px 20px; transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-y: auto;
         }
         .side-menu.active { right: 0; }
@@ -94,7 +99,6 @@
         .side-menu-icon { font-size: 18px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--glass); }
         .side-menu-label { font-size: 13px; font-weight: 500; flex: 1; }
 
-        /* History mini items */
         .history-panel { display: none; margin: 8px 0 12px 20px; }
         .history-panel.active { display: block; }
         .history-mini-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: var(--glass); margin-bottom: 4px; font-size: 10px; }
@@ -126,20 +130,16 @@
             padding: 20px; margin-bottom: 14px;
             transition: all 0.3s ease;
         }
-        .glass-card:hover { border-color: rgba(255,255,255,0.15); background: var(--glass-hover); }
 
         /* VIP Cards */
         .vip-card { position: relative; overflow: hidden; }
         .vip-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
-        .vip-1::before { background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6); }
-        .vip-2::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa, #8b5cf6); }
-        .vip-3::before { background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b); }
-        .vip-4::before { background: linear-gradient(90deg, #ef4444, #f87171, #ef4444); }
+        .vip-1::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .vip-2::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+        .vip-3::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .vip-4::before { background: linear-gradient(90deg, #ef4444, #f87171); }
         .vip-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .vip-badge {
-            font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
-            background: var(--glass); border: 1px solid var(--glass-border);
-        }
+        .vip-badge { font-size: 14px; font-weight: 700; padding: 4px 12px; border-radius: 20px; background: var(--glass); border: 1px solid var(--glass-border); }
         .vip-price { font-size: 22px; font-weight: 800; color: var(--gold); }
         .vip-price small { font-size: 11px; color: var(--text-secondary); font-weight: 400; }
         .vip-features { list-style: none; margin: 12px 0; display: grid; gap: 4px; }
@@ -152,11 +152,8 @@
             border-radius: 14px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px;
             cursor: pointer; color: #fff;
             background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
-            transition: all 0.3s ease; position: relative; overflow: hidden;
-            letter-spacing: 0.5px;
+            transition: all 0.3s ease; position: relative; overflow: hidden; letter-spacing: 0.5px;
         }
-        .glass-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); opacity: 0; transition: opacity 0.3s ease; }
-        .glass-btn:hover::after { opacity: 1; }
         .glass-btn:active { transform: scale(0.97); }
         .glass-btn.blue { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.1); }
         .glass-btn.purple { border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.1); }
@@ -166,18 +163,12 @@
         .glass-btn.activated { opacity: 0.5; cursor: default; pointer-events: none; }
         .one-time-badge { background: rgba(239,68,68,0.15); color: #ef4444; padding: 2px 8px; border-radius: 10px; font-size: 9px; font-weight: 600; margin-right: 6px; }
 
-        /* Balance display */
         .balance-display { font-size: 36px; font-weight: 900; text-align: center; padding: 20px; background: var(--glass); border-radius: 20px; border: 1px solid var(--glass-border); margin-bottom: 14px; }
         .balance-amount { background: linear-gradient(135deg, #10b981, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Address */
         .address-box { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; font-size: 11px; font-family: monospace; word-break: break-all; margin: 10px 0; border: 1px solid var(--glass-border); }
-
-        /* Task */
         .task-row { display: flex; justify-content: space-between; align-items: center; }
         .task-reward { color: var(--green); font-size: 11px; font-weight: 600; }
-
-        /* Referral */
         .ref-stats { display: flex; justify-content: space-around; margin: 16px 0; }
         .ref-stat { text-align: center; }
         .ref-stat-val { font-size: 28px; font-weight: 900; color: var(--gold); }
@@ -211,25 +202,21 @@
         .modal-box p { color: var(--text-secondary); font-size: 12px; line-height: 1.7; margin-bottom: 16px; }
 
         .input-glass { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--glass); color: #fff; font-family: 'Inter', sans-serif; font-size: 13px; margin: 6px 0; outline: none; }
-        .input-glass:focus { border-color: var(--accent); }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
     </style>
 </head>
 <body>
-    <!-- Background Orbs -->
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
     <div class="bg-orb orb-3"></div>
 
-    <!-- Hamburger -->
     <div class="hamburger-menu">
-        <div class="hamburger-btn" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+        <div class="hamburger-btn" id="hamburger-btn" onclick="toggleMenu()"><span></span><span></span><span></span></div>
     </div>
-    <div class="side-menu-overlay" id="side-menu-overlay" onclick="toggleMenu()"></div>
+    <div class="side-menu-overlay" id="side-menu-overlay" onclick="closeMenu()"></div>
     <div class="side-menu" id="side-menu">
         <div class="side-menu-title">Menu</div>
         <a class="side-menu-item support" href="https://t.me/zaraton2026" target="_blank">
@@ -240,16 +227,15 @@
         </div>
         <div class="side-menu-item history" onclick="toggleHistory()">
             <span class="side-menu-icon">📊</span><span class="side-menu-label">History</span>
-            <span id="history-arrow" style="font-size:10px;color:var(--text-secondary);">▼</span>
+            <span id="history-arrow" style="font-size:10px;">▼</span>
         </div>
         <div class="history-panel" id="history-panel"></div>
     </div>
 
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="logo-icon">💎</div>
-            <h1 class="platform-name">INVEST PLATFORM</h1>
+            <h1 class="platform-name">ZARATON</h1>
             <p class="subtitle">VIP Investment Ecosystem</p>
         </div>
 
@@ -279,18 +265,18 @@
 
         <!-- WALLET -->
         <div class="page" id="page-wallet">
-            <div class="balance-display"><span style="font-size:13px;color:var(--text-secondary);">Balance</span><br><span class="balance-amount" id="user-balance">0.00</span> <small style="color:var(--text-secondary);">TON</small></div>
+            <div class="balance-display"><span style="font-size:13px;">Balance</span><br><span class="balance-amount" id="user-balance">0.00</span> <small>TON</small></div>
             <div class="glass-card">
                 <h3 style="font-size:14px;margin-bottom:12px;">📥 Deposit</h3>
-                <p style="font-size:11px;color:var(--text-secondary);">Send TON with your UID in comment:</p>
+                <p style="font-size:11px;">Send TON with your UID in comment:</p>
                 <div class="address-box">UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ</div>
                 <button class="glass-btn blue" onclick="copyAddress()">📋 Copy Address</button>
-                <p style="font-size:11px;color:var(--text-secondary);margin-top:8px;">UID: <strong id="user-uid">---</strong></p>
-                <a href="https://t.me/zaratonTbot?start=check" target="_blank"><button class="glass-btn green" style="margin-top:6px;">🤖 Verify Deposit</button></a>
+                <p style="font-size:11px;margin-top:8px;">UID: <strong id="user-uid">---</strong></p>
+                <button class="glass-btn green" style="margin-top:6px;" onclick="verifyDeposit()">🤖 Verify Deposit</button>
             </div>
             <div class="glass-card">
                 <h3 style="font-size:14px;margin-bottom:12px;">📤 Withdraw</h3>
-                <p style="font-size:11px;color:var(--text-secondary);">Only after plan period ends.</p>
+                <p style="font-size:11px;">Only after plan period ends.</p>
                 <input class="input-glass" type="text" placeholder="Your TON address" id="withdraw-address">
                 <input class="input-glass" type="number" placeholder="Amount (TON)" id="withdraw-amount">
                 <button class="glass-btn green" onclick="requestWithdraw()">Request Withdrawal</button>
@@ -308,14 +294,14 @@
                 <div><div style="font-weight:600;font-size:13px;">Join Group</div><div class="task-reward">+0.01 TON</div></div>
                 <button class="glass-btn purple" style="width:auto;padding:8px 20px;" id="task-group-btn" onclick="doTask('group')">Join</button>
             </div>
-            <p style="font-size:10px;color:var(--text-secondary);margin-top:12px;">⚠️ Task rewards cannot be withdrawn.</p>
+            <p style="font-size:10px;margin-top:12px;">⚠️ Task rewards cannot be withdrawn.</p>
         </div>
 
         <!-- REFERRAL -->
         <div class="page" id="page-referral">
             <div class="glass-card" style="text-align:center;">
                 <h3 style="font-size:16px;">👥 Referral Program</h3>
-                <p style="font-size:12px;color:var(--text-secondary);margin:10px 0;">Earn 5% of every referral deposit!</p>
+                <p style="font-size:12px;margin:10px 0;">Earn 5% of every referral deposit!</p>
                 <div class="address-box" id="ref-link">Loading...</div>
                 <button class="glass-btn gold" onclick="copyRefLink()">📋 Copy Link</button>
             </div>
@@ -332,9 +318,9 @@
     <div class="modal" id="faq-modal">
         <div class="modal-box" style="max-height:75vh;overflow-y:auto;text-align:left;">
             <h3 style="text-align:center;">❓ FAQ</h3>
-            <div class="glass-card" style="margin:8px 0;"><strong style="color:var(--gold);">How to deposit?</strong><p style="margin:4px 0 0;">Copy address → Send TON with UID in comment → Click Verify Deposit</p></div>
-            <div class="glass-card" style="margin:8px 0;"><strong style="color:var(--gold);">When can I withdraw?</strong><p style="margin:4px 0 0;">Only after plan period ends. VIP1=30d, VIP2=20d, VIP3=15d, VIP4=10d.</p></div>
-            <div class="glass-card" style="margin:8px 0;"><strong style="color:var(--gold);">Task rewards?</strong><p style="margin:4px 0 0;">Not withdrawable. Only plan profits can be withdrawn.</p></div>
+            <div class="glass-card" style="margin:8px 0;"><strong>How to deposit?</strong><p style="margin:4px 0 0;">Copy address → Send TON with UID in comment → Click Verify Deposit</p></div>
+            <div class="glass-card" style="margin:8px 0;"><strong>When can I withdraw?</strong><p style="margin:4px 0 0;">Only after plan period ends. VIP1=30d, VIP2=20d, VIP3=15d, VIP4=10d.</p></div>
+            <div class="glass-card" style="margin:8px 0;"><strong>Task rewards?</strong><p style="margin:4px 0 0;">Not withdrawable. Only plan profits can be withdrawn.</p></div>
             <button class="glass-btn blue" onclick="closeModal()" style="margin-top:12px;">Close</button>
         </div>
     </div>
@@ -351,114 +337,180 @@
 
     <!-- Bottom Nav -->
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchPage('home', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><rect x="5" y="10" width="14" height="11" rx="1"/></svg>
-            <span class="nav-label">Home</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('wallet', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="16" cy="12" r="2"/></svg>
-            <span class="nav-label">Wallet</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('task', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
-            <span class="nav-label">Task</span>
-        </div>
-        <div class="nav-item" onclick="switchPage('referral', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="6" r="3"/><path d="M12 12c-3 0-5 2-5 4v1h10v-1c0-2-2-4-5-4z"/></svg>
-            <span class="nav-label">Referral</span>
-        </div>
+        <div class="nav-item active" onclick="switchPage('home', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><rect x="5" y="10" width="14" height="11" rx="1"/></svg><span class="nav-label">Home</span></div>
+        <div class="nav-item" onclick="switchPage('wallet', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="16" cy="12" r="2"/></svg><span class="nav-label">Wallet</span></div>
+        <div class="nav-item" onclick="switchPage('task', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg><span class="nav-label">Task</span></div>
+        <div class="nav-item" onclick="switchPage('referral', this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="6" r="3"/><path d="M12 12c-3 0-5 2-5 4v1h10v-1c0-2-2-4-5-4z"/></svg><span class="nav-label">Referral</span></div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready(); tg.expand();
+        
+        const API_URL = 'https://zaraton-api.alireza2001ab.workers.dev';
         const MERCHANT_WALLET = 'UQDxPjlH5H0zwvE6sEzAo_VaL-i7rys77iiZDoA0DaD_i7LZ';
         const BOT_USERNAME = 'zaratonTbot';
-        let userId = 'unknown', userData = {};
+        
+        let userId = 'unknown';
+        let userData = {};
+        
         if (tg.initDataUnsafe?.user) {
             userId = tg.initDataUnsafe.user.id;
             document.getElementById('user-uid').textContent = userId;
             document.getElementById('ref-link').textContent = `https://t.me/${BOT_USERNAME}?start=${userId}`;
             loadUserData();
         }
+        
         function loadUserData() {
-            const s = localStorage.getItem('tonvault_' + userId);
+            const s = localStorage.getItem('zaraton_' + userId);
             userData = s ? JSON.parse(s) : { balance: 0, taskBalance: 0, plans: [], tasks: {}, referrals: [], refEarnings: 0, transactions: [] };
             updateUI();
         }
-        function saveUserData() { localStorage.setItem('tonvault_' + userId, JSON.stringify(userData)); }
+        
+        function saveUserData() { localStorage.setItem('zaraton_' + userId, JSON.stringify(userData)); }
+        
         function updateUI() {
-            const t = (userData.balance||0)+(userData.taskBalance||0);
+            const t = (userData.balance || 0) + (userData.taskBalance || 0);
             document.getElementById('user-balance').textContent = t.toFixed(2);
-            document.getElementById('ref-count').textContent = (userData.referrals||[]).length;
-            document.getElementById('ref-earnings').textContent = (userData.refEarnings||0).toFixed(2);
-            if((userData.plans||[]).includes(1)){const b=document.getElementById('vip1-btn');if(b){b.classList.add('activated');b.textContent='✓ Activated';b.onclick=null;}}
-            if(userData.tasks?.channel){const b=document.getElementById('task-channel-btn');if(b){b.classList.add('activated');b.textContent='✓ Done';b.onclick=null;}}
-            if(userData.tasks?.group){const b=document.getElementById('task-group-btn');if(b){b.classList.add('activated');b.textContent='✓ Done';b.onclick=null;}}
-        }
-        function switchPage(p, el) {
-            document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-            document.getElementById('page-'+p).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-            if(el) el.classList.add('active');
-        }
-        function toggleMenu(){document.getElementById('side-menu').classList.toggle('active');document.getElementById('side-menu-overlay').classList.toggle('active');}
-        function openFAQ(){document.getElementById('faq-modal').classList.add('active');toggleMenu();}
-        function toggleHistory(){
-            const p=document.getElementById('history-panel'),a=document.getElementById('history-arrow');
-            p.classList.toggle('active');
-            a.textContent = p.classList.contains('active')?'▲':'▼';
-            if(p.classList.contains('active')){
-                const txs=userData.transactions||[];
-                p.innerHTML = txs.length?txs.slice(0,10).map(t=>`<div class="history-mini-item"><span class="history-mini-plan">VIP ${t.plan}</span><span class="history-mini-amount">${t.amount} TON</span><span style="color:var(--text-secondary);font-size:9px;">${t.date}</span></div>`).join(''):'<p style="color:var(--text-secondary);font-size:10px;text-align:center;">No transactions</p>';
+            document.getElementById('ref-count').textContent = (userData.referrals || []).length;
+            document.getElementById('ref-earnings').textContent = (userData.refEarnings || 0).toFixed(2);
+            if ((userData.plans || []).includes(1)) {
+                const b = document.getElementById('vip1-btn');
+                if (b) { b.classList.add('activated'); b.textContent = '✓ Activated'; b.onclick = null; }
+            }
+            if (userData.tasks?.channel) {
+                const b = document.getElementById('task-channel-btn');
+                if (b) { b.classList.add('activated'); b.textContent = '✓ Done'; b.onclick = null; }
+            }
+            if (userData.tasks?.group) {
+                const b = document.getElementById('task-group-btn');
+                if (b) { b.classList.add('activated'); b.textContent = '✓ Done'; b.onclick = null; }
             }
         }
-        function copyAddress(){navigator.clipboard.writeText(MERCHANT_WALLET).then(()=>showModal('✅','Copied!','Send TON with your UID.'));}
-        function copyRefLink(){navigator.clipboard.writeText(document.getElementById('ref-link').textContent).then(()=>showModal('✅','Copied!','Share with friends!'));}
-        function buyPlan(n){
-            if(n===1&&(userData.plans||[]).includes(1)){showModal('❌','Error','VIP 1 only once.');return;}
-            const prices={1:10,2:25,3:50,4:100},price=prices[n];
-            const total=(userData.balance||0)+(userData.taskBalance||0);
-            if(total<price){showModal('❌','Insufficient',`Need ${price} TON.`);return;}
-            let rem=price;
-            if(userData.balance>=rem){userData.balance-=rem;rem=0;}else{rem-=userData.balance;userData.balance=0;userData.taskBalance-=rem;}
+        
+        function switchPage(p, el) {
+            document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+            document.getElementById('page-' + p).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+        
+        function toggleMenu() {
+            document.getElementById('side-menu').classList.toggle('active');
+            document.getElementById('side-menu-overlay').classList.toggle('active');
+            document.getElementById('hamburger-btn').classList.toggle('active');
+        }
+        
+        function closeMenu() {
+            document.getElementById('side-menu').classList.remove('active');
+            document.getElementById('side-menu-overlay').classList.remove('active');
+            document.getElementById('hamburger-btn').classList.remove('active');
+        }
+        
+        function openFAQ() {
+            document.getElementById('faq-modal').classList.add('active');
+            closeMenu();
+        }
+        
+        function toggleHistory() {
+            const p = document.getElementById('history-panel');
+            const a = document.getElementById('history-arrow');
+            p.classList.toggle('active');
+            a.textContent = p.classList.contains('active') ? '▲' : '▼';
+            if (p.classList.contains('active')) {
+                const txs = userData.transactions || [];
+                p.innerHTML = txs.length ? txs.slice(0, 10).map(t => 
+                    `<div class="history-mini-item"><span class="history-mini-plan">VIP ${t.plan}</span><span class="history-mini-amount">${t.amount} TON</span><span>${t.date}</span></div>`
+                ).join('') : '<p style="color:var(--text-secondary);font-size:10px;text-align:center;">No transactions</p>';
+            }
+        }
+        
+        function copyAddress() {
+            navigator.clipboard.writeText(MERCHANT_WALLET).then(() => showModal('✅', 'Copied!', 'Send TON with your UID in comment.'));
+        }
+        
+        function copyRefLink() {
+            navigator.clipboard.writeText(document.getElementById('ref-link').textContent).then(() => showModal('✅', 'Copied!', 'Share with friends!'));
+        }
+        
+        async function verifyDeposit() {
+            showModal('⏳', 'Checking...', 'Verifying your deposit on blockchain...');
+            try {
+                const res = await fetch(`${API_URL}/check/${userId}`);
+                const data = await res.json();
+                if (data.success) {
+                    userData.balance = (userData.balance || 0) + data.amount;
+                    userData.transactions = userData.transactions || [];
+                    userData.transactions.unshift({ plan: 'Deposit', amount: data.amount, date: new Date().toLocaleDateString('en-US') });
+                    saveUserData();
+                    updateUI();
+                    showModal('✅', 'Confirmed!', `${data.amount} TON added to your balance.`);
+                } else {
+                    showModal('❌', 'Not Found', data.message || 'No new deposits. Make sure UID is in comment.');
+                }
+            } catch (e) {
+                showModal('❌', 'Error', 'Could not verify. Try again.');
+            }
+        }
+        
+        function buyPlan(n) {
+            if (n === 1 && (userData.plans || []).includes(1)) { showModal('❌', 'Error', 'VIP 1 only once.'); return; }
+            const prices = { 1: 10, 2: 25, 3: 50, 4: 100 };
+            const price = prices[n];
+            const total = (userData.balance || 0) + (userData.taskBalance || 0);
+            if (total < price) { showModal('❌', 'Insufficient', `Need ${price} TON.`); return; }
+            let rem = price;
+            if (userData.balance >= rem) { userData.balance -= rem; rem = 0; }
+            else { rem -= userData.balance; userData.balance = 0; userData.taskBalance -= rem; }
             userData.plans.push(n);
-            const periods={1:30,2:20,3:15,4:10};
-            userData.planExpiry=userData.planExpiry||{};
-            userData.planExpiry[n]=Date.now()+(periods[n]*86400000);
-            userData.transactions = userData.transactions || [];
-            userData.transactions.unshift({plan:n,amount:price,date:new Date().toLocaleDateString('en-US')});
-            saveUserData();updateUI();
-            showModal('🎉','Activated!',`VIP ${n} activated!\n${price} TON deducted.`);
+            const periods = { 1: 30, 2: 20, 3: 15, 4: 10 };
+            userData.planExpiry = userData.planExpiry || {};
+            userData.planExpiry[n] = Date.now() + (periods[n] * 86400000);
+            userData.transactions.unshift({ plan: n, amount: price, date: new Date().toLocaleDateString('en-US') });
+            saveUserData();
+            updateUI();
+            showModal('🎉', 'Activated!', `VIP ${n} activated!\n${price} TON deducted.`);
         }
-        function doTask(type){
-            if(userData.tasks?.[type]){showModal('❌','Done','Already completed.');return;}
-            const url=type==='channel'?'https://t.me/zaraton2026ai':'https://t.me/chatzaraton';
-            window.open(url,'_blank');
-            showModal('📢','Verify',`Join the ${type}, then send <b>/checkjoin ${type}</b> to @${BOT_USERNAME}`);
+        
+        function doTask(type) {
+            if (userData.tasks?.[type]) { showModal('❌', 'Done', 'Already completed.'); return; }
+            const url = type === 'channel' ? 'https://t.me/zaraton2026ai' : 'https://t.me/chatzaraton';
+            window.open(url, '_blank');
+            showModal('📢', 'Verify', `Join the ${type}, then use the bot to verify.`);
         }
-        function requestWithdraw(){
-            const addr=document.getElementById('withdraw-address').value.trim();
-            const amount=parseFloat(document.getElementById('withdraw-amount').value);
-            if(!addr){showModal('❌','Error','Enter address.');return;}
-            if(!amount||amount<=0){showModal('❌','Error','Invalid amount.');return;}
-            if(amount>(userData.balance||0)){showModal('❌','Error','Insufficient balance.');return;}
-            let can=false;
-            if(userData.planExpiry){for(const[k,v]of Object.entries(userData.planExpiry)){if(Date.now()>=v&&(userData.plans||[]).includes(parseInt(k)))can=true;}}
-            if(!can){showModal('❌','Locked','Plan period not ended.');return;}
-            showModal('✅','Submitted',`${amount} TON → ${addr.substring(0,6)}...`);
+        
+        function requestWithdraw() {
+            const addr = document.getElementById('withdraw-address').value.trim();
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            if (!addr) { showModal('❌', 'Error', 'Enter address.'); return; }
+            if (!amount || amount <= 0) { showModal('❌', 'Error', 'Invalid amount.'); return; }
+            if (amount > (userData.balance || 0)) { showModal('❌', 'Error', 'Insufficient balance.'); return; }
+            let can = false;
+            if (userData.planExpiry) {
+                for (const [k, v] of Object.entries(userData.planExpiry)) {
+                    if (Date.now() >= v && (userData.plans || []).includes(parseInt(k))) can = true;
+                }
+            }
+            if (!can) { showModal('❌', 'Locked', 'Plan period not ended.'); return; }
+            showModal('✅', 'Submitted', `${amount} TON → ${addr.substring(0, 6)}...`);
         }
-        function showModal(icon,title,msg){
-            document.getElementById('modal-icon').textContent=icon;
-            document.getElementById('modal-title').textContent=title;
-            document.getElementById('modal-message').innerHTML=msg;
+        
+        function showModal(icon, title, msg) {
+            document.getElementById('modal-icon').textContent = icon;
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').innerHTML = msg;
             document.getElementById('generic-modal').classList.add('active');
         }
-        function closeModal(){
+        
+        function closeModal() {
             document.getElementById('faq-modal').classList.remove('active');
             document.getElementById('generic-modal').classList.remove('active');
         }
-        window.onclick=function(e){if(e.target.classList.contains('modal'))closeModal();if(e.target.classList.contains('side-menu-overlay'))toggleMenu();}
+        
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) closeModal();
+        };
+        
         updateUI();
     </script>
 </body>
